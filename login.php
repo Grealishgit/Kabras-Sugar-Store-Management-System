@@ -105,12 +105,15 @@ if ($authHandler->isLoggedIn()) {
 
                         <div class="button-group">
                             <button type="submit" class="btn-primary">Sign In</button>
+                            <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
                             <button type="button" class="btn-secondary" onclick="showRegister()">Register</button>
+                            <?php endif; ?>
                         </div>
                     </form>
                 </div>
 
                 <!-- REGISTER -->
+                <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
                 <div class="register-section hidden" id="registerSection">
                     <div class="login-header">
                         <h2>Create An Account</h2>
@@ -155,6 +158,7 @@ if ($authHandler->isLoggedIn()) {
                         <div class="form-group">
                             <label for="reg_role" class="form-label">Role</label>
                             <select id="reg_role" name="role" class="form-select" required>
+                                <option value="staff" selected>Staff</option>
                                 <option value="manager">Manager</option>
                                 <option value="admin">Admin</option>
                             </select>
@@ -166,6 +170,7 @@ if ($authHandler->isLoggedIn()) {
                         </div>
                     </form>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
 

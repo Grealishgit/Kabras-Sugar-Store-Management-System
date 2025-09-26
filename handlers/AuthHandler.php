@@ -16,6 +16,19 @@ class AuthHandler
     {
         $this->userModel = new User();
         $this->startSession();
+        // Auto-create default admin if not present
+        $defaultAdminEmail = 'admin@kabrasugar.com';
+        if (!$this->userModel->findByEmail($defaultAdminEmail)) {
+            $adminData = [
+                'name' => 'Default Admin',
+                'email' => $defaultAdminEmail,
+                'phone' => '',
+                'national_id' => '',
+                'password' => 'hunter123', // pass plain password, User model will hash
+                'role' => 'admin'
+            ];
+            $this->userModel->createUser($adminData);
+        }
     }
 
     /**
