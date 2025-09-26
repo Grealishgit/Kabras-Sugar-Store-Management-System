@@ -1,4 +1,11 @@
 /* ===== Login Page Styles ===== */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #2c3e50;
+}
 
 .login-page {
     min-height: 100vh;
@@ -11,7 +18,7 @@
 .login-image-section {
     flex: 1;
     position: fixed;
-    background-color: #1BB02C;
+    background-color: #F4ED3C;
     background-image: url('../../uploads/background2.jpg');
     background-size: cover;
     background-position: center;
@@ -93,7 +100,7 @@
 /* Right side - Login section */
 .login-form-section {
     flex: 1;
-    background: #F4ED3C;
+    background-color: #1BB02C;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -156,7 +163,7 @@
     width: 100%;
     padding: 15px 20px;
     border: 2px solid #111111;
-    border-radius: 12px;
+    border-radius: 8px;
     font-size: 1rem;
     transition: all 0.3s ease;
     background: #f8f9fa;
@@ -165,7 +172,7 @@
 
 .form-input:focus {
     outline: none;
-    border-color: #ffd700;
+    background-color: #1BB02C;
     background: white;
     box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
 }
@@ -184,7 +191,7 @@
 
 .form-select:focus {
     outline: none;
-    border-color: #ffd700;
+    background-color: #1BB02C;
     background: white;
     box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
 }
@@ -198,9 +205,10 @@
 
 .btn-primary {
     flex: 1;
-    background: linear-gradient(135deg, #fdd804 0%, #f7db06 100%);
+    background-color: #1BB02C;
     color: white;
-    border: none;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ebe6e6;
     padding: 16px 30px;
     border-radius: 8px;
     font-size: 15px;
@@ -212,6 +220,7 @@
 }
 
 .btn-primary:hover {
+    background-color: #068715;
     transform: translateY(-2px);
     box-shadow: 0 10px 30px rgba(238, 242, 3, 0.3);
 }
@@ -222,8 +231,8 @@
 
 .btn-secondary {
     flex: 1;
-    background: transparent;
-    color: #2c3e50;
+    background: #2c3e50;
+    color: white;
     border: 2px solid #ecf0f1;
     padding: 16px 30px;
     border-radius: 8px;
@@ -234,7 +243,7 @@
 }
 
 .btn-secondary:hover {
-    background: #2c3e50;
+    background-color: #242524;
     color: white;
     transform: translateY(-2px);
 }
