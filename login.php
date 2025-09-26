@@ -56,10 +56,10 @@ if ($authHandler->isLoggedIn()) {
                     </div>
 
                     <?php if (isset($_GET['error'])): ?>
-                    <div class="alert error"><?php echo htmlspecialchars($_GET['error']); ?></div>
+                        <div class="alert error"><?php echo htmlspecialchars($_GET['error']); ?></div>
                     <?php endif; ?>
                     <?php if (isset($_GET['success'])): ?>
-                    <div class="alert success"><?php echo htmlspecialchars($_GET['success']); ?></div>
+                        <div class="alert success"><?php echo htmlspecialchars($_GET['success']); ?></div>
                     <?php endif; ?>
 
                     <form action="auth-handler.php" method="POST" id="loginForm">
@@ -75,6 +75,32 @@ if ($authHandler->isLoggedIn()) {
                             <label for="password" class="form-label">Password</label>
                             <input type="password" placeholder="Enter your password" id="password" name="password"
                                 class="form-input" required>
+                        </div>
+                        <!-- login-role-select.html -->
+                        <div class="role-select horizontal">
+                            <p class="role-label">Select Login Role:</p>
+
+                            <div class="role-options">
+                                <label class="role-option">
+                                    <input type="radio" name="role" value="staff" checked>
+                                    <span class="custom-radio"></span>
+                                    Staff
+                                </label>
+
+                                <label class="role-option">
+                                    <input type="radio" name="role" value="manager">
+                                    <span class="custom-radio"></span>
+                                    Manager
+                                </label>
+
+                                <label class="role-option">
+                                    <input type="radio" name="role" value="admin">
+                                    <span class="custom-radio"></span>
+                                    Admin
+                                </label>
+                            </div>
+
+
                         </div>
 
                         <div class="button-group">
@@ -142,15 +168,15 @@ if ($authHandler->isLoggedIn()) {
     </div>
 
     <script>
-    function showRegister() {
-        document.getElementById('loginSection').classList.add('hidden');
-        document.getElementById('registerSection').classList.remove('hidden');
-    }
+        function showRegister() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('registerSection').classList.remove('hidden');
+        }
 
-    function showLogin() {
-        document.getElementById('registerSection').classList.add('hidden');
-        document.getElementById('loginSection').classList.remove('hidden');
-    }
+        function showLogin() {
+            document.getElementById('registerSection').classList.add('hidden');
+            document.getElementById('loginSection').classList.remove('hidden');
+        }
     </script>
 </body>
 
