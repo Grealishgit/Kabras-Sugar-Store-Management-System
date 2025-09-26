@@ -56,10 +56,10 @@ if ($authHandler->isLoggedIn()) {
                     </div>
 
                     <?php if (isset($_GET['error'])): ?>
-                        <div class="alert error"><?php echo htmlspecialchars($_GET['error']); ?></div>
+                    <div class="alert error"><?php echo htmlspecialchars($_GET['error']); ?></div>
                     <?php endif; ?>
                     <?php if (isset($_GET['success'])): ?>
-                        <div class="alert success"><?php echo htmlspecialchars($_GET['success']); ?></div>
+                    <div class="alert success"><?php echo htmlspecialchars($_GET['success']); ?></div>
                     <?php endif; ?>
 
                     <form action="auth-handler.php" method="POST" id="loginForm">
@@ -113,7 +113,7 @@ if ($authHandler->isLoggedIn()) {
                 <!-- REGISTER -->
                 <div class="register-section hidden" id="registerSection">
                     <div class="login-header">
-                        <h2>Create Staff Account</h2>
+                        <h2>Create An Account</h2>
                         <p>Only admins can create accounts</p>
                     </div>
 
@@ -122,33 +122,39 @@ if ($authHandler->isLoggedIn()) {
 
                         <div class="form-group">
                             <label for="reg_name" class="form-label">Full Name</label>
-                            <input type="text" id="reg_name" name="name" class="form-input" required>
+                            <input type="text" id="reg_name" placeholder="Enter your full name" name="name"
+                                class="form-input" required>
                         </div>
 
                         <div class="form-group">
                             <label for="reg_email" class="form-label">Email</label>
-                            <input type="email" id="reg_email" name="email" class="form-input" required>
+                            <input type="email" id="reg_email" placeholder="Enter your email" name="email"
+                                class="form-input" required>
                         </div>
 
-                        <div class="form-group">
-                            <label for="reg_phone" class="form-label">Phone</label>
-                            <input type="text" id="reg_phone" name="phone" class="form-input">
-                        </div>
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="reg_phone" class="form-label">Phone</label>
+                                <input type="text" id="reg_phone" placeholder="Enter your phone number" name="phone"
+                                    class="form-input">
+                            </div>
 
-                        <div class="form-group">
-                            <label for="reg_nid" class="form-label">National ID</label>
-                            <input type="text" id="reg_nid" name="national_id" class="form-input">
+                            <div class="form-group">
+                                <label for="reg_nid" class="form-label">National ID</label>
+                                <input type="text" id="reg_nid" placeholder="Enter your national ID" name="national_id"
+                                    class="form-input">
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label for="reg_password" class="form-label">Password</label>
-                            <input type="password" id="reg_password" name="password" class="form-input" required>
+                            <input type="password" id="reg_password" placeholder="Enter your password" name="password"
+                                class="form-input" required>
                         </div>
 
                         <div class="form-group">
                             <label for="reg_role" class="form-label">Role</label>
                             <select id="reg_role" name="role" class="form-select" required>
-                                <option value="staff">Staff</option>
                                 <option value="manager">Manager</option>
                                 <option value="admin">Admin</option>
                             </select>
@@ -168,15 +174,15 @@ if ($authHandler->isLoggedIn()) {
     </div>
 
     <script>
-        function showRegister() {
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('registerSection').classList.remove('hidden');
-        }
+    function showRegister() {
+        document.getElementById('loginSection').classList.add('hidden');
+        document.getElementById('registerSection').classList.remove('hidden');
+    }
 
-        function showLogin() {
-            document.getElementById('registerSection').classList.add('hidden');
-            document.getElementById('loginSection').classList.remove('hidden');
-        }
+    function showLogin() {
+        document.getElementById('registerSection').classList.add('hidden');
+        document.getElementById('loginSection').classList.remove('hidden');
+    }
     </script>
 </body>
 
