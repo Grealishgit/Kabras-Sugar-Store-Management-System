@@ -7,14 +7,24 @@ $authHandler = new AuthHandler();
 if ($authHandler->isLoggedIn()) {
     $currentUser = $authHandler->getCurrentUser();
     if ($currentUser) {
-        if ($currentUser['role'] === 'admin') {
+        $role = strtolower($currentUser['role']);
+        if ($role === 'admin') {
             header('Location: admin/dashboard.php');
             exit();
-        } elseif ($currentUser['role'] === 'manager') {
-            header('Location: manager.php');
+        } elseif ($role === 'manager') {
+            header('Location: admin/manager.php');
+            exit();
+        } elseif ($role === 'cashier') {
+            header('Location: cashier/dashboard.php');
+            exit();
+        } elseif ($role === 'accountant') {
+            header('Location: accountant/dashboard.php');
+            exit();
+        } elseif ($role === 'storekeeper') {
+            header('Location: storekeeper/dashboard.php');
             exit();
         } else {
-            header('Location: staff.php');
+            header('Location: index.php');
             exit();
         }
     }

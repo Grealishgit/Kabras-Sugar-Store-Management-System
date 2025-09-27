@@ -48,7 +48,15 @@ $currentUserName = $currentUser['name'];
 </head>
 
 <body>
-    Hello User
+    <div>
+        <h1>Welcome, <?php echo htmlspecialchars($currentUserName); ?>!</h1>
+        <p>Your role: <?php echo htmlspecialchars($currentRole); ?></p>
+        <p>This is the main page. Use the navigation bar to explore different sections based on your role.</p>
+    </div>
+
+    <div>
+        <a href="?logout=1" class="logout-link">Logout</a>
+    </div>
 </body>
 
 </html>

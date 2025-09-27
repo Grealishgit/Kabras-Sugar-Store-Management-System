@@ -180,13 +180,17 @@ class AuthHandler
      */
     private function getRedirectUrl($role)
     {
-        switch ($role) {
-            case 'Admin':
+        switch (strtolower($role)) {
+            case 'admin':
                 return "admin/dashboard.php";
-            case 'Manager':
+            case 'manager':
                 return "manager/dashboard.php";
-            case 'Staff':
+            case 'staff':
                 return "staff/dashboard.php";
+            case 'cashier':
+                return "cashier/dashboard.php";
+            case 'storekeeper':
+                return "store/storekeeper.php";
             default:
                 return "index.php";
         }

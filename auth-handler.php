@@ -16,10 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header('Location: login.php?error=Role mismatch.');
                 exit();
             }
-            // Redirect to dashboard
-            $redirect = $user['data']['redirect'] ?? 'index.php';
-            header('Location: ' . $redirect);
-            exit();
+            // // Redirect to dashboard
+            // $redirect = $user['data']['redirect'] ?? 'index.php';
+            // header('Location: ' . $redirect);
+            // exit();
         } else {
             header('Location: login.php?error=' . urlencode($user['error']));
             exit();
