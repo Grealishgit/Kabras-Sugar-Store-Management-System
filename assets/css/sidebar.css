@@ -7,6 +7,7 @@
     --text: #eef1f6;
     --accent: #4cafef;
     --hover: #2b2b3f;
+    --danger: #e74c3c;
 }
 
 /* container */
@@ -161,7 +162,7 @@
     gap: 8px;
     width: 100%;
     padding: 8px 10px;
-    background: transparent;
+    background: var(--danger);
     border: 0;
     color: var(--muted);
     text-align: left;
@@ -175,15 +176,23 @@
     font-size: 14px;
 }
 
+.btn-logout a.logout-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 600;
+}
+
 .btn-logout:hover {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--danger);
     color: var(--text);
 }
 
 .btn-logout .chevron-down {
     margin-left: auto;
     opacity: 0.8;
+    color: var(--muted);
     font-size: 12px;
+    rotate: -90deg;
     transform: translateY(1px);
 }
 

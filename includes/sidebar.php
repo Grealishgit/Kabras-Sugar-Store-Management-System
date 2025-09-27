@@ -73,11 +73,13 @@ if (isset($menu[$role])) {
 
         <!-- footer: pinned to bottom -->
         <div class="sidebar-footer" role="region" aria-label="User actions">
-            <div class="usern-name">
+            <div class="user-name">
                 <h2>
                     <?php
                     if (isset($currentUser) && isset($currentUser['name']) && $currentUser['name']) {
                         echo htmlspecialchars($currentUser['name']);
+                    } elseif (isset($_SESSION['user_name']) && $_SESSION['user_name']) {
+                        echo htmlspecialchars($_SESSION['user_name']);
                     } else {
                         echo 'Guest';
                     }
@@ -87,6 +89,8 @@ if (isset($menu[$role])) {
                         <?php
                         if (isset($currentUser) && isset($currentUser['role']) && $currentUser['role']) {
                             echo htmlspecialchars($currentUser['role']);
+                        } elseif (isset($_SESSION['user_role']) && $_SESSION['user_role']) {
+                            echo htmlspecialchars($_SESSION['user_role']);
                         } else {
                             echo 'No Role';
                         }
@@ -95,13 +99,13 @@ if (isset($menu[$role])) {
             </div>
 
             <div class="footer-actions">
-                <form action="logout.php" method="POST" class="logout-form" style="display:inline;">
-                    <button type="submit" class="btn-logout" aria-label="Logout">
+                <div class="logout-form" style="display:inline;">
+                    <button class="btn-logout" aria-label="Logout">
                         <i class="fas fa-sign-out-alt"></i>
-                        <span> <a href="?logout=1" class="logout-link">Logout</a></span>
+                        <a href="?logout=1" class="logout-link">Logout</a>
                         <i class="fas fa-chevron-down chevron-down" aria-hidden="true"></i>
                     </button>
-                </form>
+                </div>
             </div>
         </div>
     </div>
