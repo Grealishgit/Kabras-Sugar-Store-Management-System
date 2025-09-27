@@ -98,7 +98,7 @@ class AuthHandler
         }
 
         if ($this->userModel->emailExists($email)) {
-            return $this->errorResponse("Email already exists. Use another one.");
+            return $this->errorResponse("Email already exists.");
         }
 
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
@@ -133,7 +133,7 @@ class AuthHandler
         session_destroy();
         return $this->successResponse([
             "message" => "You have been logged out.",
-            "redirect" => "index.php"
+            "redirect" => "login.php"
         ]);
     }
 
@@ -181,11 +181,11 @@ class AuthHandler
     private function getRedirectUrl($role)
     {
         switch ($role) {
-            case 'admin':
+            case 'Admin':
                 return "admin/dashboard.php";
-            case 'manager':
+            case 'Manager':
                 return "manager/dashboard.php";
-            case 'staff':
+            case 'Staff':
                 return "staff/dashboard.php";
             default:
                 return "index.php";
