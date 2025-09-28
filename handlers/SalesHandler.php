@@ -106,8 +106,10 @@ class SalesHandler
     }
 
     // Process a sale (multiple products)
-    public function processSale($cashierId, $items)
+    public function processSale($customerId, $cashierId, $items)
     {
+        if (!is_array($items)) return false;
+        $customerId = $customerId ? intval($customerId) : 1;
         $totalAmount = 0;
         $saleItems = [];
         foreach ($items as $productId => $qty) {
@@ -130,8 +132,8 @@ class SalesHandler
         if (empty($saleItems)) return false;
 
         // Insert sale
-        $stmt = $this->db->prepare("INSERT INTO sales (user_id, total_amount) VALUES (:uid, :total)");
-        $stmt->execute([':uid' => $cashierId, ':total' => $totalAmount]);
+        $stmt = $this->db->prepare("INSERT INTO sales (customer_id, user_id, total_amount) VALUES (:cid, :uid, :total)");
+        $stmt->execute([':cid' => $customerId, ':uid' => $cashierId, ':total' => $totalAmount]);
         $saleId = $this->db->lastInsertId();
         if (!$saleId) return false;
 
