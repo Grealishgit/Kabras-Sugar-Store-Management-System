@@ -1,14 +1,7 @@
-<?php
-session_start();
+<?php session_start();
 require_once '../handlers/AuthHandler.php';
-$authHandler = new AuthHandler();
 
-// Handle logout
-if (isset($_GET['logout']) && $_GET['logout'] == 1) {
-    $authHandler->handleLogout();
-    header('Location: ../login.php?success=You have been logged out.');
-    exit();
-}
+$authHandler = new AuthHandler();
 
 // Ensure user is logged in and is admin
 if (!$authHandler->isLoggedIn()) {
@@ -17,17 +10,34 @@ if (!$authHandler->isLoggedIn()) {
 }
 
 $currentUser = $authHandler->getCurrentUser();
+
 if ($currentUser['role'] !== 'Admin') {
     header('Location: ../login.php?error=Access denied. Admin privileges required.');
     exit();
 }
 
+// Handle database backup
+if (isset($_POST['backup_db'])) {
+    $host = "localhost";
+    $user = "root";
+    $pass = "Hunter42.";
+    $dbname = "kabras_store";
 
-// Get all users
-$users = $authHandler->getAllUsers();
-// 
+    $backupDir = realpath(__DIR__ . '/../backups');
+    if (!is_dir($backupDir) || !is_writable($backupDir)) {
+        $error = "Backup directory is not writable. Please check folder permissions: $backupDir";
+    } else {
+        $backupFile = $backupDir . DIRECTORY_SEPARATOR . 'db-backup-' . date("Y-m-d-H-i-s") . '.sql';
+        $command = "mysqldump --user={$user} --password={$pass} --host={$host} {$dbname} > \"{$backupFile}\"";
+        system($command, $output);
+        if ($output === 0 && file_exists($backupFile)) {
+            $success = "Database backup created successfully! File saved at: $backupFile";
+        } else {
+            $error = "Database backup failed. Please check server permissions and mysqldump path.";
+        }
+    }
+}
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,13 +45,29 @@ $users = $authHandler->getAllUsers();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin-Backup</title>
+    <title>Backup Database</title>
     <link rel="stylesheet" href="../assets/css/sidebar.css">
-
+    <link rel="stylesheet" href="../assets/css/backup.css">
 </head>
 
-<body>
-    <?php include '../includes/sidebar.php'; ?>
+<body><?php include '../includes/sidebar.php';
+        ?><main class="main-content">
+        <div class="container">
+            <h1>Backup Database</h1>
+            <?php if (isset($success)): ?>
+                <p class="success-msg">
+                    <?= htmlspecialchars($success); ?>
+                </p>
+            <?php elseif (isset($error)): ?>
+                <p class="error-msg">
+                    <?= htmlspecialchars($error); ?>
+                </p>
+            <?php endif; ?>
+            <form method="POST" action="backup.php" class="backup-form">
+                <button type="submit" name="backup_db" class="btn-backup">Create Backup</button>
+            </form>
+        </div>
+    </main>
 </body>
 
 </html>
