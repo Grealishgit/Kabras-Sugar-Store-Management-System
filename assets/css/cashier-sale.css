@@ -422,3 +422,100 @@
         grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     }
 }
+
+/* All Sales Section */
+.all-sales {
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.all-sales h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #333;
+}
+
+/* Table Wrapper */
+.sales-table-wrapper {
+    overflow-x: auto;
+    margin-top: 10px;
+}
+
+/* Sales Table */
+.sales-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: #fafafa;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.sales-table thead {
+    background: #4CAF50;
+    color: #fff;
+    text-align: left;
+}
+
+.sales-table thead th {
+    padding: 12px 10px;
+    font-weight: 600;
+}
+
+.sales-table tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+    transition: background 0.2s ease-in-out;
+}
+
+.sales-table tbody tr:hover {
+    background: #f1f7f1;
+}
+
+.sales-table tbody td {
+    padding: 10px;
+    color: #444;
+}
+
+/* Empty Sales Row */
+.sales-table .no-sales {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 15px;
+}
+
+/* Pagination */
+.sales-pagination {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.sales-pagination button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #4CAF50;
+    color: #fff;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.sales-pagination button:hover {
+    background: #45a049;
+}
+
+.sales-pagination span {
+    font-weight: 600;
+    color: #333;
+}

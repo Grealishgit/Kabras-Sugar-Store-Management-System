@@ -345,28 +345,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['process_sale'])) {
                     </div>
                 </div>
 
-                <!-- Recent Sales -->
-                <div class="recent-sales">
-                    <h3><i class="fas fa-history"></i> Recent Sales</h3>
-                    <div class="recent-list">
-                        <?php if (!empty($recentSales)): ?>
-                            <?php foreach ($recentSales as $sale): ?>
-                                <div class="recent-item">
-                                    <div class="sale-info">
-                                        <span class="sale-amount">Ksh <?= number_format($sale['total_amount'], 2); ?></span>
-                                        <span class="sale-time"><?= date('H:i', strtotime($sale['sale_date'])); ?></span>
-                                    </div>
-                                    <div class="sale-details">
-                                        <?= $sale['item_count']; ?> item(s)
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <p class="no-sales">No recent sales</p>
-                        <?php endif; ?>
+
+            </div>
+            <!-- All Sales Table with Pagination -->
+            <div class="all-sales">
+                <h3><i class="fas fa-table"></i> All Sales</h3>
+                <div class="sales-table-wrapper">
+                    <table id="salesTable" class="sales-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Sale ID</th>
+                                <th>Customer ID</th>
+                                <th>Cashier ID</th>
+                                <th>Amount (Ksh)</th>
+                                <th>Items</th>
+                                <th>Unit Price</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $allSales = $salesHandler->getSalesByCashier($currentUser['id']);
+                            if (!empty($allSales)):
+                                $rowNum = 1;
+                                foreach ($allSales as $sale): ?>
+                                    <tr>
+                                        <td><?= $rowNum++; ?></td>
+                                        <td><?= date('Y-m-d H:i', strtotime($sale['sale_date'])); ?></td>
+                                        <td><?= $sale['id']; ?></td>
+                                        <td><?= $sale['customer_id'] ?? '-'; ?></td>
+                                        <td><?= $sale['user_id']; ?></td>
+                                        <td><?= number_format($sale['total_amount'], 2); ?></td>
+                                        <td><?= $sale['quantity']; ?></td>
+                                        <td><?= number_format($sale['unit_price'], 2); ?></td>
+                                        <td>
+                                            <button class="btn btn-info btn-sm">View</button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach;
+                            else: ?>
+                                <tr>
+                                    <td colspan="8" class="no-sales">No sales found</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+
+                    <div class="sales-pagination">
+                        <button id="salesPrev" class="btn btn-secondary">Prev</button>
+                        <span id="salesPageNum">Page 1</span>
+                        <button id="salesNext" class="btn btn-secondary">Next</button>
                     </div>
                 </div>
             </div>
+
         </div>
     </main>
 
