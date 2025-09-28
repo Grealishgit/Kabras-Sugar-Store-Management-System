@@ -1,6 +1,26 @@
 // sales.js - Cashier Sales Table Pagination & UI
 
 document.addEventListener('DOMContentLoaded', function () {
+    // Stats card tab switching
+    const tabBtns = document.querySelectorAll('.stats-tabs .tab-btn');
+    const statsPeriods = document.querySelectorAll('.stats-period');
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            tabBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const period = this.getAttribute('data-period');
+            statsPeriods.forEach(card => {
+                card.classList.add('hidden');
+            });
+            if (period === 'today') {
+                document.getElementById('today-stats').classList.remove('hidden');
+            } else if (period === 'week') {
+                document.getElementById('week-stats').classList.remove('hidden');
+            } else if (period === 'month') {
+                document.getElementById('month-stats').classList.remove('hidden');
+            }
+        });
+    });
     // Pagination for sales table
     const salesTable = document.getElementById('salesTable');
     if (salesTable) {

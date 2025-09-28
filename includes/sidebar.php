@@ -53,7 +53,7 @@ if (isset($menu[$role])) {
         <div class="sidebar-brand">
             <a href="home.php" class="brand-link">
                 <i class="fas fa-store"></i>
-                <span class="brand-text">KabrasPOS</span>
+                <span class="brand-text">KabrasStore</span>
             </a>
         </div>
 
