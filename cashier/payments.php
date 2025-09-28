@@ -99,7 +99,7 @@ $payments = $paymentsHandler->getPaymentsByUser($currentUser['id']);
 
             <!-- Header -->
             <div class="receipt-header">
-                <h2>Payment #<span id="paymentNumber"></span></h2>
+                <h2>Payment Number: KBRS<span id="paymentNumber"></span></h2>
             </div>
 
             <!-- Body -->
@@ -112,13 +112,15 @@ $payments = $paymentsHandler->getPaymentsByUser($currentUser['id']);
 
             <!-- Footer -->
             <div class="receipt-footer">
-                <p>Processed by: <strong id="cashierName"></strong></p>
+                <p>Processed by:
+                    <strong id="cashierName"></strong>
+                </p>
                 <p id="paymentDate"></p>
             </div>
 
             <div class="action-buttons">
                 <button id="downloadPaymentBtn" class="btn-download">Download PDF</button>
-                <button onclick="window.print()" class="btn-print"><i class="fas fa-print"></i> Print</button>
+                <button onclick="window.print()" class="btn-print"><i class="fas fa-print"></i> Print Payment</button>
             </div>
         </div>
     </div>
@@ -189,15 +191,24 @@ $payments = $paymentsHandler->getPaymentsByUser($currentUser['id']);
                     const formattedDate = new Date(payment.payment_date).toLocaleString();
 
                     paymentDetails.innerHTML = `
-                <p><strong>Sale ID:</strong> ${payment.sale_id}</p>
-                <p><strong>Customer:</strong> ${payment.customer_id ?? "-"}</p>
-                <p><strong>Method:</strong> ${payment.method}</p>
-                <p><strong>Amount:</strong> <b>Ksh ${payment.amount}</b></p>
-                <p><strong>Status:</strong> ${payment.status}</p>
-            `;
+                        <div class="receipt-body">
+                            <div class="receipt-row">
+                                <div><strong>Sale ID:</strong> ${payment.sale_id}</div>
+                                <div><strong>Customer:</strong> ${payment.customer_id ?? "-"}</div>
+                            </div>
+                            <div class="receipt-row">
+                                <div><strong>Method:</strong> ${payment.method}</div>
+                                <div><strong>Amount:</strong> <b>Ksh ${payment.amount}</b></div>
+                            </div>
+                            <div class="receipt-row">
+                                <div><strong>Status:</strong><span  class="status"> ${payment.status}</span></div>
+                            </div>
+                        </div>
+                    `;
 
                     document.getElementById("paymentNumber").textContent = payment.id;
-                    document.getElementById("cashierName").textContent = cashierName;
+                    document.getElementById("cashierName").textContent =
+                        "<?= htmlspecialchars($currentUser['name']); ?>";
                     document.getElementById("paymentDate").textContent = formattedDate;
 
                     // Generate QR

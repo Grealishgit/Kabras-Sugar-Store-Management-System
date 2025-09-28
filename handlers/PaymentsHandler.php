@@ -58,14 +58,18 @@ class PaymentsHandler
     public function getAllPayments()
     {
         $sql = "SELECT p.*, 
-                       c.name AS customer_name, 
-                       u.name AS cashier_name, 
-                       s.product_name, s.total_amount AS sale_total
-                FROM payments p
-                LEFT JOIN customers c ON p.customer_id = c.id
-                LEFT JOIN users u ON p.user_id = u.id
-                LEFT JOIN sales s ON p.sale_id = s.id
-                ORDER BY p.payment_date DESC";
+               c.name AS customer_name, 
+               u.name AS cashier_name, 
+               s.total_amount AS sale_total,
+               GROUP_CONCAT(pr.name SEPARATOR ', ') AS product_names
+        FROM payments p
+        LEFT JOIN customers c ON p.customer_id = c.id
+        LEFT JOIN users u ON p.user_id = u.id
+        LEFT JOIN sales s ON p.sale_id = s.id
+        LEFT JOIN sale_items si ON s.id = si.sale_id
+        LEFT JOIN products pr ON si.product_id = pr.id
+        GROUP BY p.id, c.name, u.name, s.total_amount
+        ORDER BY p.payment_date DESC";
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

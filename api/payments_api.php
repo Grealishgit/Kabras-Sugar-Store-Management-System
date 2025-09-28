@@ -11,6 +11,11 @@ switch ($action) {
         echo json_encode($handler->getCustomers());
         break;
 
+    case 'get_payments':
+        $payments = $handler->getAllPayments();
+        echo json_encode($payments);
+        break;
+
     case 'add_payment':
         $data = json_decode(file_get_contents("php://input"), true);
         $user_id = $_SESSION['user_id'] ?? null; // get from session
