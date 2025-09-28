@@ -126,9 +126,6 @@ $users = $authHandler->getAllUsers();
             <table class="users-table" id="usersTable">
                 <thead>
                     <tr>
-                        <th>
-                            <input type="checkbox" id="selectAll">
-                        </th>
                         <th>User Info</th>
                         <th>Contact</th>
                         <th>Role</th>
@@ -140,9 +137,6 @@ $users = $authHandler->getAllUsers();
                 <tbody>
                     <?php foreach ($users as $user): ?>
                         <tr class="user-row" data-role="<?php echo htmlspecialchars($user['role']); ?>">
-                            <td>
-                                <input type="checkbox" class="user-checkbox" value="<?php echo $user['id']; ?>">
-                            </td>
                             <td>
                                 <div class="user-info">
 

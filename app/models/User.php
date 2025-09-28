@@ -1,6 +1,6 @@
 <?php
-// User model for Kabras Sugar Store
-require_once __DIR__ . '/../../config/database.php';
+// User.php
+require_once __DIR__ . '../../../config/database.php';
 
 class User
 {
@@ -9,6 +9,46 @@ class User
     public function __construct()
     {
         $this->db = (new Database())->connect();
+    }
+
+    /**
+     * Update user info (admin only)
+     */
+    public function updateUser($id, $data)
+    {
+        $fields = [];
+        $params = [':id' => $id];
+
+        if (isset($data['name'])) {
+            $fields[] = 'name = :name';
+            $params[':name'] = $data['name'];
+        }
+        if (isset($data['email'])) {
+            $fields[] = 'email = :email';
+            $params[':email'] = $data['email'];
+        }
+        if (isset($data['phone'])) {
+            $fields[] = 'phone = :phone';
+            $params[':phone'] = $data['phone'];
+        }
+        if (isset($data['national_id'])) {
+            $fields[] = 'national_id = :national_id';
+            $params[':national_id'] = $data['national_id'];
+        }
+        if (isset($data['role'])) {
+            $fields[] = 'role = :role';
+            $params[':role'] = $data['role'];
+        }
+        if (isset($data['password']) && !empty($data['password'])) {
+            $fields[] = 'password = :password';
+            $params[':password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+        }
+
+        if (empty($fields)) return false;
+
+        $sql = 'UPDATE users SET ' . implode(', ', $fields) . ' WHERE id = :id';
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute($params);
     }
 
     /**
