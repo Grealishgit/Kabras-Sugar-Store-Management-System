@@ -8,7 +8,7 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
 // Role -> menu mapping (label, href, fontawesome-class)
 $menu = [
     'common' => [
-        ['label' => 'Home', 'href' => 'home.php', 'icon' => 'fas fa-home'],
+        ['label' => 'Dashboard', 'href' => 'dashboard.php', 'icon' => 'fas fa-home'],
     ],
     'Admin' => [
         ['label' => 'User Management', 'href' => '/admin/users.php', 'icon' => 'fas fa-users'],

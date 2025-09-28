@@ -211,3 +211,71 @@ h1 {
 .calendar-day:hover {
     background: #dce9ff;
 }
+
+/* === Responsive Styles === */
+
+/* Tablets (<= 992px) */
+@media (max-width: 992px) {
+
+    /* Sidebar collapses */
+    .main-content {
+        margin-left: 50px;
+        padding: 15px;
+    }
+
+    /* Stats grid becomes 2 columns */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+
+    /* Activity & Role Chart stack */
+    .activity-role-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Pending & Backup stack */
+    .pending-backup-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Quick links wrap */
+    .quick-links {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .ql-btn {
+        flex: 1 1 calc(50% - 12px);
+        justify-content: center;
+    }
+}
+
+/* Mobile (<= 600px) */
+@media (max-width: 600px) {
+
+    /* Stats grid becomes 1 column */
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-card {
+        padding: 16px;
+    }
+
+    /* Quick links buttons full width */
+    .ql-btn {
+        flex: 1 1 100%;
+        justify-content: center;
+    }
+
+    /* Calendar grid smaller text */
+    .calendar-day {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .calendar-header {
+        font-size: 16px;
+    }
+}
