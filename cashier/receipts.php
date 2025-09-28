@@ -94,24 +94,30 @@ $sales = $salesHandler->getSalesByCashier($currentUser['id']);
         <div class="modal-content">
             <span class="close-btn">&times;</span>
 
-            <!-- Receipt Header -->
-            <div class="receipt-header">
-                <h2>Receipt #<span id="receiptNumber"></span></h2>
-            </div>
+            <!-- Printable Section -->
+            <div id="receiptPrintable">
+                <!-- Receipt Header -->
+                <div class="receipt-header">
+                    <h2>Receipt #<span id="receiptNumber"></span></h2>
+                </div>
 
-            <!-- Receipt Body -->
-            <div id="receiptDetails"></div>
+                <!-- Receipt Body -->
+                <div id="receiptDetails"></div>
 
-            <!-- QR Code Centered -->
-            <div class="receipt-qrcode">
-                <div id="qrcode"></div>
-            </div>
+                <!-- QR Code Centered -->
+                <div class="receipt-qrcode">
+                    <div id="qrcode"></div>
+                </div>
 
-            <!-- Footer -->
-            <div class="receipt-footer">
-                <p class="processed-by">Processed by: <strong id="cashierName"></strong></p>
-                <p class="receipt-date" id="receiptDate"></p>
+                <!-- Footer -->
+                <div class="receipt-footer">
+                    <p class="processed-by">Processed by: <strong id="cashierName"></strong></p>
+                    <p class="receipt-date" id="receiptDate"></p>
+                </div>
             </div>
+            <!-- End Printable Section -->
+
+            <!-- Buttons (NOT included in PDF) -->
             <div class="action-buttons">
                 <button id="downloadBtn" class="btn-download">Download PDF</button>
                 <button onclick="window.print()" class="btn-print">
@@ -120,6 +126,7 @@ $sales = $salesHandler->getSalesByCashier($currentUser['id']);
             </div>
         </div>
     </div>
+
 
 
     <script>
@@ -179,7 +186,7 @@ $sales = $salesHandler->getSalesByCashier($currentUser['id']);
         });
 
         document.getElementById('downloadBtn').addEventListener('click', () => {
-            const element = document.querySelector('.modal-content'); // the receipt modal
+            const element = document.getElementById('receiptPrintable'); // only the receipt section
             const opt = {
                 margin: 0.5,
                 filename: `receipt_${Date.now()}.pdf`,
@@ -198,6 +205,7 @@ $sales = $salesHandler->getSalesByCashier($currentUser['id']);
             };
             html2pdf().set(opt).from(element).save();
         });
+
 
 
         closeBtn.onclick = () => {
