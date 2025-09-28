@@ -32,33 +32,21 @@ $recentSales = $salesHandler->getRecentSales($currentUser['id'], 10);
 // Handle sale submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['process_sale'])) {
     $items = $_POST['items'] ?? [];
-    $customerId = !empty($_POST['customer_id']) ? intval($_POST['customer_id']) : null;
-    $totalAmount = 0;
-    $saleItems = [];
+    $customerId = !empty($_POST['customer_id']) ? intval($_POST['customer_id']) : 1;
 
-    // Calculate total and prepare sale items
+    // Only keep items with quantity > 0
+    $filteredItems = [];
     foreach ($items as $productId => $qty) {
         $qty = intval($qty);
         if ($qty > 0) {
-            foreach ($products as $product) {
-                if ($product['id'] == $productId) {
-                    $saleItems[] = [
-                        'product_id' => $productId,
-                        'quantity' => $qty,
-                        'unit_price' => $product['price'],
-                        'subtotal' => $product['price'] * $qty
-                    ];
-                    $totalAmount += $product['price'] * $qty;
-                    break;
-                }
-            }
+            $filteredItems[$productId] = $qty;
         }
     }
 
-    if (!empty($saleItems)) {
-        $saleResult = $salesHandler->processSale($customerId, $currentUser['id'], $saleItems, $totalAmount);
+    if (!empty($filteredItems)) {
+        $saleResult = $salesHandler->processSale($customerId, $currentUser['id'], $filteredItems);
         if ($saleResult) {
-            header("Location: sales.php?success=Sale processed successfully. Total: Ksh " . number_format($totalAmount, 2));
+            header("Location: sales.php?success=Sale processed successfully.");
         } else {
             header("Location: sales.php?error=Failed to process sale. Please try again.");
         }

@@ -62,31 +62,82 @@ class SalesHandler
         $stmt->execute([':uid' => $cashierId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    // Get today's sales for a cashier
+    // Get today's sales stats for a cashier
     public function getTodaySales($cashierId)
     {
-        $stmt = $this->db->prepare("SELECT SUM(total_amount) as total FROM sales WHERE user_id = :uid AND DATE(sale_date) = CURDATE()");
+        $stats = [
+            'total_transactions' => 0,
+            'total_quantity' => 0,
+            'avg_unit_price' => 0,
+            'total_amount' => 0
+        ];
+        $stmt = $this->db->prepare("SELECT s.id FROM sales s WHERE s.user_id = :uid AND DATE(s.sale_date) = CURDATE()");
         $stmt->execute([':uid' => $cashierId]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $row ? $row['total'] : 0;
+        $sales = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        $stats['total_transactions'] = count($sales);
+        if ($sales) {
+            $in = implode(',', array_map('intval', $sales));
+            $q = $this->db->query("SELECT SUM(quantity) as total_quantity, AVG(unit_price) as avg_unit_price FROM sale_items WHERE sale_id IN ($in)");
+            $row = $q->fetch(PDO::FETCH_ASSOC);
+            $stats['total_quantity'] = $row['total_quantity'] ?? 0;
+            $stats['avg_unit_price'] = $row['avg_unit_price'] ?? 0;
+            $q2 = $this->db->query("SELECT SUM(total_amount) as total_amount FROM sales WHERE id IN ($in)");
+            $row2 = $q2->fetch(PDO::FETCH_ASSOC);
+            $stats['total_amount'] = $row2['total_amount'] ?? 0;
+        }
+        return $stats;
     }
 
-    // Get weekly sales for a cashier (last 7 days)
+    // Get weekly sales stats for a cashier (last 7 days)
     public function getWeeklySales($cashierId)
     {
-        $stmt = $this->db->prepare("SELECT SUM(total_amount) as total FROM sales WHERE user_id = :uid AND sale_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)");
+        $stats = [
+            'total_transactions' => 0,
+            'total_quantity' => 0,
+            'avg_unit_price' => 0,
+            'total_amount' => 0
+        ];
+        $stmt = $this->db->prepare("SELECT s.id FROM sales s WHERE s.user_id = :uid AND s.sale_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)");
         $stmt->execute([':uid' => $cashierId]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $row ? $row['total'] : 0;
+        $sales = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        $stats['total_transactions'] = count($sales);
+        if ($sales) {
+            $in = implode(',', array_map('intval', $sales));
+            $q = $this->db->query("SELECT SUM(quantity) as total_quantity, AVG(unit_price) as avg_unit_price FROM sale_items WHERE sale_id IN ($in)");
+            $row = $q->fetch(PDO::FETCH_ASSOC);
+            $stats['total_quantity'] = $row['total_quantity'] ?? 0;
+            $stats['avg_unit_price'] = $row['avg_unit_price'] ?? 0;
+            $q2 = $this->db->query("SELECT SUM(total_amount) as total_amount FROM sales WHERE id IN ($in)");
+            $row2 = $q2->fetch(PDO::FETCH_ASSOC);
+            $stats['total_amount'] = $row2['total_amount'] ?? 0;
+        }
+        return $stats;
     }
 
-    // Get monthly sales for a cashier (current month)
+    // Get monthly sales stats for a cashier (current month)
     public function getMonthlySales($cashierId)
     {
-        $stmt = $this->db->prepare("SELECT SUM(total_amount) as total FROM sales WHERE user_id = :uid AND MONTH(sale_date) = MONTH(CURDATE()) AND YEAR(sale_date) = YEAR(CURDATE())");
+        $stats = [
+            'total_transactions' => 0,
+            'total_quantity' => 0,
+            'avg_unit_price' => 0,
+            'total_amount' => 0
+        ];
+        $stmt = $this->db->prepare("SELECT s.id FROM sales s WHERE s.user_id = :uid AND MONTH(s.sale_date) = MONTH(CURDATE()) AND YEAR(s.sale_date) = YEAR(CURDATE())");
         $stmt->execute([':uid' => $cashierId]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $row ? $row['total'] : 0;
+        $sales = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        $stats['total_transactions'] = count($sales);
+        if ($sales) {
+            $in = implode(',', array_map('intval', $sales));
+            $q = $this->db->query("SELECT SUM(quantity) as total_quantity, AVG(unit_price) as avg_unit_price FROM sale_items WHERE sale_id IN ($in)");
+            $row = $q->fetch(PDO::FETCH_ASSOC);
+            $stats['total_quantity'] = $row['total_quantity'] ?? 0;
+            $stats['avg_unit_price'] = $row['avg_unit_price'] ?? 0;
+            $q2 = $this->db->query("SELECT SUM(total_amount) as total_amount FROM sales WHERE id IN ($in)");
+            $row2 = $q2->fetch(PDO::FETCH_ASSOC);
+            $stats['total_amount'] = $row2['total_amount'] ?? 0;
+        }
+        return $stats;
     }
 
     // Get recent sales (last 10 sales) for a cashier
