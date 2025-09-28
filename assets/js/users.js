@@ -130,7 +130,21 @@ document.addEventListener('DOMContentLoaded', function () {
                     closeUserModal();
                 });
         } else {
-            // TODO: Implement add user logic
+            formData.append('action', 'add');
+            fetch('../handlers/UserHandler.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('User added');
+                    location.reload();
+                } else {
+                    alert('Add user failed');
+                }
+                closeUserModal();
+            });
         }
     });
 

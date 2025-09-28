@@ -29,10 +29,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             'role' => $_POST['role']
         ];
         if (!empty($_POST['password'])) {
-            $data['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT);
+            $data['password'] = $_POST['password'];
         }
         $result = $userModel->updateUser($id, $data);
         echo json_encode(['success' => $result]);
+        exit();
+    }
+    if ($_POST['action'] === 'add') {
+        // Add new user
+        $data = [
+            'name' => $_POST['name'],
+            'email' => strtolower($_POST['email']),
+            'phone' => $_POST['phone'],
+            'national_id' => $_POST['national_id'],
+            'role' => $_POST['role'],
+            'password' => $_POST['password']
+        ];
+        $result = $userModel->createUser($data);
+        echo json_encode(['success' => $result ? true : false]);
         exit();
     }
     if ($_POST['action'] === 'delete' && isset($_POST['id'])) {

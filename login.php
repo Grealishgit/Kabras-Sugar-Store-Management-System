@@ -86,113 +86,15 @@ if ($authHandler->isLoggedIn()) {
                             <input type="password" placeholder="Enter your password" id="password" name="password"
                                 class="form-input" required>
                         </div>
-                        <!-- login-role-select.html -->
-                        <div class="role-select horizontal">
-                            <p class="role-label">Select Login Role:</p>
-
-                            <div class="role-options">
-                                <label class="role-option">
-                                    <input type="radio" name="role" value="storekeeper" checked>
-                                    <span class="custom-radio"></span>
-                                    Storekeeper
-                                </label>
-
-                                <label class="role-option">
-                                    <input type="radio" name="role" value="manager">
-                                    <span class="custom-radio"></span>
-                                    Manager
-                                </label>
-                                <label class="role-option">
-                                    <input type="radio" name="role" value="cashier">
-                                    <span class="custom-radio"></span>
-                                    Cashier
-                                </label>
-                                <label class="role-option">
-                                    <input type="radio" name="role" value="accountant">
-                                    <span class="custom-radio"></span>
-                                    Accountant
-                                </label>
-
-                                <label class="role-option">
-                                    <input type="radio" name="role" value="admin">
-                                    <span class="custom-radio"></span>
-                                    Admin
-                                </label>
-                            </div>
-
-
-                        </div>
+                        <!-- Role select removed -->
 
                         <div class="button-group">
                             <button type="submit" class="btn-primary">Sign In</button>
-                            <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-                                <button type="button" class="btn-secondary" onclick="showRegister()">Register</button>
-                            <?php endif; ?>
                         </div>
                     </form>
                 </div>
 
-                <!-- REGISTER -->
-                <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-                    <div class="register-section hidden" id="registerSection">
-                        <div class="login-header">
-                            <h2>Create An Account</h2>
-                            <p>Only admins can create accounts</p>
-                        </div>
-
-                        <form action="auth-handler.php" method="POST" id="registerForm">
-                            <input type="hidden" name="action" value="register">
-
-                            <div class="form-group">
-                                <label for="reg_name" class="form-label">Full Name</label>
-                                <input type="text" id="reg_name" placeholder="Enter your full name" name="name"
-                                    class="form-input" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="reg_email" class="form-label">Email</label>
-                                <input type="email" id="reg_email" placeholder="Enter your email" name="email"
-                                    class="form-input" required>
-                            </div>
-
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <label for="reg_phone" class="form-label">Phone</label>
-                                    <input type="text" id="reg_phone" placeholder="Enter your phone number" name="phone"
-                                        class="form-input">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="reg_nid" class="form-label">National ID</label>
-                                    <input type="text" id="reg_nid" placeholder="Enter your national ID" name="national_id"
-                                        class="form-input">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="reg_password" class="form-label">Password</label>
-                                <input type="password" id="reg_password" placeholder="Enter your password" name="password"
-                                    class="form-input" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="reg_role" class="form-label">Role</label>
-                                <select id="reg_role" name="role" class="form-select" required>
-                                    <option value="cashier" selected>Cashier</option>
-                                    <option value="manager">Manager</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="accountant">Accountant</option>
-                                    <option value="storekeeper">Storekeeper</option>
-                                </select>
-                            </div>
-
-                            <div class="button-group">
-                                <button type="submit" class="btn-primary">Create Account</button>
-                                <button type="button" class="btn-secondary" onclick="showLogin()">Back to Login</button>
-                            </div>
-                        </form>
-                    </div>
-                <?php endif; ?>
+                <!-- Register section removed -->
             </div>
         </div>
 
@@ -200,17 +102,7 @@ if ($authHandler->isLoggedIn()) {
 
     </div>
 
-    <script>
-        function showRegister() {
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('registerSection').classList.remove('hidden');
-        }
-
-        function showLogin() {
-            document.getElementById('registerSection').classList.add('hidden');
-            document.getElementById('loginSection').classList.remove('hidden');
-        }
-    </script>
+    <!-- Register JS removed -->
 </body>
 
 </html>
