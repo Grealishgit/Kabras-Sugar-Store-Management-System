@@ -219,15 +219,22 @@ h1 {
 
     /* Sidebar collapses */
     .main-content {
-        margin-left: 50px;
+        margin-left: 70px;
         padding: 15px;
     }
 
     /* Stats grid becomes 2 columns */
     .stats-grid {
+        display: grid;
         grid-template-columns: repeat(2, 1fr);
+        /* 2 columns */
         grid-template-rows: auto;
+        /* rows auto adjust */
+        gap: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
+
 
     /* Activity & Role Chart stack */
     .activity-role-grid {
@@ -256,7 +263,8 @@ h1 {
 
     /* Stats grid becomes 1 column */
     .stats-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+
     }
 
     .stat-card {
