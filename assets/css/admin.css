@@ -3,10 +3,10 @@
     --sidebar-width: 220px;
     --main-bg: #f4f6f9;
     --panels: #ffffff;
-    --text: #2c3e50;
+    --main-text: #2c3e50;
     --muted: #7f8c8d;
     --accent: #1BB02C;
-    --hover: #f1f3f6;
+    --hovers: #f1f3f6;
     --danger: #e74c3c;
     /* --shadow: 0 4px 20px rgba(0, 0, 0, 0.06); */
     --radius: 8px;
@@ -22,7 +22,7 @@
 body {
     font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--main-bg);
-    color: var(--text);
+    color: var(--main-text);
     line-height: 1.5;
 }
 
@@ -49,7 +49,7 @@ body {
 .header-left h1 {
     font-size: 1.8rem;
     font-weight: 700;
-    color: var(--text);
+    color: var(--main-text);
     margin-bottom: 6px;
     display: flex;
     align-items: center;
@@ -207,7 +207,7 @@ body {
     outline: none;
     flex: 1;
     font-size: 0.95rem;
-    color: var(--text);
+    color: var(--main-text);
     background: transparent;
 }
 
@@ -224,12 +224,12 @@ body {
     cursor: pointer;
     font-size: 0.9rem;
     font-weight: 500;
-    color: var(--text);
+    color: var(--main-text);
     transition: all var(--transition);
 }
 
 .filter-btn:hover {
-    background: var(--hover);
+    background: var(--hovers);
 }
 
 .filter-btn.active {
@@ -267,7 +267,7 @@ body {
 }
 
 .users-table tr:hover {
-    background: var(--hover);
+    background: var(--hovers);
 }
 
 .user-info {
@@ -351,7 +351,7 @@ body {
 }
 
 .btn-action:hover {
-    background: var(--hover);
+    background: var(--hovers);
 }
 
 .btn-edit {
@@ -391,7 +391,7 @@ body {
 }
 
 .pagination-btn:hover {
-    background: var(--hover);
+    background: var(--hovers);
 }
 
 /* Modals */
@@ -454,7 +454,7 @@ body {
 .form-group label {
     font-size: 0.9rem;
     font-weight: 600;
-    color: var(--text);
+    color: var(--main-text);
 }
 
 .form-group input,
