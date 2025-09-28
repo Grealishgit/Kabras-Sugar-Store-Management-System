@@ -40,6 +40,7 @@ foreach ($users as $user) {
 
 $totalUsers = count($users);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
