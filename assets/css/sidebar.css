@@ -5,7 +5,7 @@
     --panel: #222233;
     --muted: #cfcfd6;
     --text: #eef1f6;
-    --accent: #4cafef;
+    --accent: #1BB02C;
     --hover: #2b2b3f;
     --danger: #e74c3c;
 }
@@ -17,7 +17,7 @@
     position: fixed;
     left: 0;
     top: 0;
-    background: linear-gradient(180deg, var(--bg) 0%, #171723 100%);
+    background: var(--bg);
     color: var(--text);
     box-shadow: 2px 0 12px rgba(0, 0, 0, 0.5);
     font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
@@ -168,7 +168,7 @@
     text-align: left;
     cursor: pointer;
     font-size: 14px;
-    border-radius: 6px;
+    border-radius: 8px;
     transition: background .15s ease, color .15s ease;
 }
 
@@ -220,7 +220,7 @@
     .sidebar-nav a {
         justify-content: center;
         padding: 12px;
-        border-radius: 10px;
+        border-radius: 8px;
     }
 
     .sidebar-footer {

@@ -1,5 +1,5 @@
 <?php
-
+// ...existing code...
 /**
  * Authentication Handler for Kabras Sugar Store
  * Handles login, registration (only by admin), logout, and session management
@@ -210,5 +210,12 @@ class AuthHandler
     private function errorResponse($message)
     {
         return ["success" => false, "error" => $message];
+    }
+    /**
+     * Get all users from the database
+     */
+    public function getAllUsers()
+    {
+        return $this->userModel->getAllUsers();
     }
 }

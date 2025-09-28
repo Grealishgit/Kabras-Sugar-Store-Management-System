@@ -92,15 +92,25 @@ if ($authHandler->isLoggedIn()) {
 
                             <div class="role-options">
                                 <label class="role-option">
-                                    <input type="radio" name="role" value="staff" checked>
+                                    <input type="radio" name="role" value="storekeeper" checked>
                                     <span class="custom-radio"></span>
-                                    Staff
+                                    Storekeeper
                                 </label>
 
                                 <label class="role-option">
                                     <input type="radio" name="role" value="manager">
                                     <span class="custom-radio"></span>
                                     Manager
+                                </label>
+                                <label class="role-option">
+                                    <input type="radio" name="role" value="cashier">
+                                    <span class="custom-radio"></span>
+                                    Cashier
+                                </label>
+                                <label class="role-option">
+                                    <input type="radio" name="role" value="accountant">
+                                    <span class="custom-radio"></span>
+                                    Accountant
                                 </label>
 
                                 <label class="role-option">

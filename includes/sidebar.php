@@ -11,9 +11,9 @@ $menu = [
         ['label' => 'Home', 'href' => 'home.php', 'icon' => 'fas fa-home'],
     ],
     'Admin' => [
-        ['label' => 'User Management', 'href' => 'users.php', 'icon' => 'fas fa-users'],
-        ['label' => 'Assign Roles', 'href' => 'roles.php', 'icon' => 'fas fa-user-cog'],
-        ['label' => 'System Backup', 'href' => 'backup.php', 'icon' => 'fas fa-server'],
+        ['label' => 'User Management', 'href' => '/admin/users.php', 'icon' => 'fas fa-users'],
+        ['label' => 'Assign Roles', 'href' => '/admin/roles.php', 'icon' => 'fas fa-user-cog'],
+        ['label' => 'System Backup', 'href' => '/admin/backup.php', 'icon' => 'fas fa-server'],
     ],
     'StoreKeeper' => [
         ['label' => 'Stock Entry', 'href' => 'stock_entry.php', 'icon' => 'fas fa-box-open'],

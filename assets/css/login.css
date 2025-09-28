@@ -286,7 +286,7 @@ html {
 /* Container */
 .role-select {
     font-family: Arial, sans-serif;
-    margin: 15px 0;
+    margin: 12px 0;
     justify-content: center;
     align-items: center;
 }
@@ -305,7 +305,7 @@ html {
 /* Horizontal container for options */
 .role-select .role-options {
     display: flex;
-    gap: 20px;
+    gap: 8px;
     justify-content: center;
     align-items: center;
     /* space between options */
@@ -316,10 +316,10 @@ html {
     display: flex;
     align-items: center;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 12px;
     color: #444;
     position: relative;
-    padding-left: 28px;
+    padding-left: 25px;
     /* leave space for custom radio */
 }
 
