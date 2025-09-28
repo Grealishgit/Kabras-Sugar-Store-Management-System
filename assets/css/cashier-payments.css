@@ -1,0 +1,283 @@
+/* cashier-payments.css
+   Clean, modern styling for cashier payments page
+*/
+
+:root {
+    --bgs: #f6f8fa;
+    --pannel: #ffffff;
+    --mutted: #738089;
+    --texts: #222831;
+    --accents: #1BB02C;
+    --dangers: #e74c3c;
+    --radius: 8px;
+    --shadows: 0 6px 18px rgba(35, 45, 55, 0.06);
+    --pads: 18px;
+    --gaps: 16px;
+}
+
+/* Page container */
+.main-content {
+    margin-left: 220px;
+    /* sync with sidebar */
+    padding: 24px;
+    min-height: 100vh;
+    background: var(--bgs);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color: var(--texts);
+}
+
+.header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+/* Header */
+.main-content h1 {
+    font-size: 22px;
+    margin-bottom: 6px;
+}
+
+.main-content p {
+    color: var(--mutted);
+    margin-bottom: 18px;
+}
+
+/* Table wrapper */
+.payments-table-wrapper {
+    background: transparent;
+    border-radius: var(--radius);
+}
+
+/* Table */
+.payments-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--pannel);
+    box-shadow: var(--shadows);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.payments-table thead {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.01));
+}
+
+.payments-table th,
+.payments-table td {
+    padding: 12px 14px;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 1px solid #eef1f3;
+}
+
+.payments-table th {
+    color: #5b6b73;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.payments-table tbody tr:nth-child(even) {
+    background: #fbfcfd;
+}
+
+.payments-table tbody tr:hover {
+    background: #f1f6f9;
+}
+
+.no-payments {
+    text-align: center;
+    padding: 18px;
+    color: var(--mutted);
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.btn-sm {
+    padding: 6px 10px;
+    font-size: 13px;
+}
+
+.btn-primary {
+    background: var(--accents);
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(27, 176, 44, 0.12);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: #eef2f4;
+    color: #34495e;
+}
+
+/* Modal background */
+.modal {
+    display: none;
+    position: fixed;
+    padding: 20px;
+    z-index: 1000;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal box */
+.modal-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 95%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+/* Distinguish record vs receipt */
+.modal-content.record {
+    width: 500px;
+}
+
+.modal-content.receipt {
+    width: 360px;
+}
+
+/* Close buttons */
+.close,
+.close-btn {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Form inside record payment modal */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input,
+select,
+textarea {
+    margin-top: 5px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Submit button */
+.btn-submit {
+    margin-top: 15px;
+    padding: 10px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn-submit:hover {
+    background: #218838;
+}
+
+.btn.add-customer {
+    background: var(--accents);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    box-shadow: 0 2px 6px rgba(27, 176, 44, 0.08);
+    transition: background 0.2s;
+}
+
+/* Responsive */
+@media (max-width:1100px) {
+
+    .payments-table th:nth-child(7),
+    .payments-table td:nth-child(7),
+    .payments-table th:nth-child(8),
+    .payments-table td:nth-child(8),
+    .payments-table th:nth-child(9),
+    .payments-table td:nth-child(9) {
+        display: none;
+    }
+}
+
+@media (max-width:760px) {
+    .main-content {
+        padding: 16px;
+        margin-left: 72px;
+    }
+
+    .payments-table thead {
+        display: none;
+    }
+
+    .payments-table,
+    .payments-table tbody,
+    .payments-table tr,
+    .payments-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .payments-table tr {
+        margin-bottom: 12px;
+        background: var(--pannel);
+        box-shadow: var(--shadows);
+        border-radius: 8px;
+        padding: 12px;
+    }
+
+    .payments-table td {
+        padding: 8px 10px;
+        border-bottom: 0;
+    }
+
+    .payments-table td::before {
+        content: attr(data-label);
+        display: block;
+        font-weight: 700;
+        color: var(--mutted);
+        margin-bottom: 4px;
+        font-size: 13px;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

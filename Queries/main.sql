@@ -74,4 +74,40 @@ CREATE TABLE sale_items (
 );
 
 
+CREATE TABLE payments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sale_id INT NOT NULL,                -- Link to the sale
+    customer_id INT NULL,                -- Optional: link to customer
+    user_id INT NOT NULL,                -- Cashier who recorded the payment
+    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    method ENUM('cash', 'mpesa', 'card', 'bank') NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    status ENUM('completed', 'pending', 'partial') DEFAULT 'completed',
+    reference_number VARCHAR(100) NULL,  -- e.g. M-Pesa code, card ref
+    notes TEXT NULL,                     -- Any remarks
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (sale_id) REFERENCES sales(id) ON DELETE CASCADE,
+    FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE SET NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE customers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_code VARCHAR(50) UNIQUE,      -- Internal/customer reference ID
+    name VARCHAR(150) NOT NULL,            -- Full name / business name
+    email VARCHAR(100) NULL,               -- Optional email
+    phone VARCHAR(20) NULL,                -- Phone / M-Pesa number
+    address VARCHAR(255) NULL,             -- Physical address
+    town VARCHAR(100) NULL,                -- Town/City
+    type ENUM('individual', 'business') DEFAULT 'individual', -- Type of customer
+    status ENUM('active', 'inactive') DEFAULT 'active',       -- Active status
+    notes TEXT NULL,                        -- Extra info
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
 -- Products
