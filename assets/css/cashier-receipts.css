@@ -193,3 +193,20 @@
         transform: scale(1);
     }
 }
+
+/* ===== Responsive ===== */
+@media screen and (max-width: 1024px) {
+    .main-content {
+        margin-left: 70px;
+    }
+
+
+}
+
+@media screen and (max-width: 768px) {
+    .main-content {
+        margin-left: 70px;
+    }
+
+
+}

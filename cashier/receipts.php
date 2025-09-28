@@ -41,7 +41,55 @@ $sales = $salesHandler->getSalesByCashier($currentUser['id']);
     <main class="main-content">
         <h1><i class="fas fa-receipt"></i> Receipts</h1>
         <p>View and print receipts for processed sales.</p>
+        <div class="receipts-search-filter" style="margin-bottom:20px;display:flex;gap:16px;align-items:center;">
+            <input type="text" id="receiptSearch" placeholder="Search by Sale ID, Customer ID, or Product Name..." style="padding:8px 12px;width:260px;border-radius:4px;border:1px solid #ccc;">
+            <select id="receiptFilter" style="padding:8px 12px;border-radius:4px;border:1px solid #ccc;">
+                <option value="">All</option>
+                <option value="today">Today</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+            </select>
+        </div>
         <div class="receipts-table-wrapper">
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const searchInput = document.getElementById('receiptSearch');
+                    const filterSelect = document.getElementById('receiptFilter');
+                    const rows = document.querySelectorAll('.receipts-table tbody tr');
+                    searchInput.addEventListener('input', function() {
+                        const val = this.value.toLowerCase();
+                        rows.forEach(row => {
+                            const saleId = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
+                            const customerId = row.querySelector('td:nth-child(4)')?.textContent.toLowerCase() || '';
+                            const productName = row.querySelector('td:nth-child(7)')?.textContent.toLowerCase() || '';
+                            if (saleId.includes(val) || customerId.includes(val) || productName.includes(val)) {
+                                row.style.display = '';
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        });
+                    });
+                    filterSelect.addEventListener('change', function() {
+                        const filter = this.value;
+                        const now = new Date();
+                        rows.forEach(row => {
+                            const dateText = row.querySelector('td:nth-child(2)')?.textContent;
+                            if (!dateText) return;
+                            const rowDate = new Date(dateText.replace(/-/g, '/'));
+                            let show = true;
+                            if (filter === 'today') {
+                                show = rowDate.toDateString() === now.toDateString();
+                            } else if (filter === 'week') {
+                                const weekAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+                                show = rowDate >= weekAgo && rowDate <= now;
+                            } else if (filter === 'month') {
+                                show = rowDate.getMonth() === now.getMonth() && rowDate.getFullYear() === now.getFullYear();
+                            }
+                            row.style.display = show ? '' : 'none';
+                        });
+                    });
+                });
+            </script>
             <table class="receipts-table">
                 <thead>
                     <tr>
