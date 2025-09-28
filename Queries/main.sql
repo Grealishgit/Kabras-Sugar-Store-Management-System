@@ -10,16 +10,26 @@ users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-products (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100),
-  unit VARCHAR(20),
-  stock_quantity INT DEFAULT 0,
-  unit_price DECIMAL(10,2),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    category VARCHAR(50),
+    description TEXT,
+    price DECIMAL(10,2) NOT NULL,
+    stock_quantity INT DEFAULT 0,
+    unit VARCHAR(20),
+    batch_number VARCHAR(50),
+    expiry_date DATE,
+    production_date DATE,
+    supplier VARCHAR(100),
+    status VARCHAR(20) DEFAULT 'active',
+    created_by INT, -- User ID of cashier/admin who added the product
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (created_by) REFERENCES users(id)
 );
 
-suppliers (
+CREATE TABLE suppliers (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100),
   contact VARCHAR(100),
@@ -44,21 +54,24 @@ purchase_items (
   FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
-sales (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  customer_id INT NULL,
-  user_id INT,
-  total_amount DECIMAL(10,2),
-  sale_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id)
+CREATE TABLE sales (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NULL, -- If you want to track customers, otherwise can be removed
+    user_id INT NOT NULL, -- Cashier/admin who processed the sale
+    total_amount DECIMAL(10,2) NOT NULL,
+    sale_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-sale_items (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  sale_id INT,
-  product_id INT,
-  quantity INT,
-  unit_price DECIMAL(10,2),
-  FOREIGN KEY (sale_id) REFERENCES sales(id),
-  FOREIGN KEY (product_id) REFERENCES products(id)
+CREATE TABLE sale_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sale_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (sale_id) REFERENCES sales(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
 );
+
+
+-- Products
