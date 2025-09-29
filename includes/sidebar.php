@@ -99,14 +99,47 @@ if (isset($menu[$role])) {
             </div>
 
             <div class="footer-actions">
-                <div class="logout-form" style="display:inline;">
-                    <button class="btn-logout" aria-label="Logout">
+                <form method="post" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" class="logout-form"
+                    style="display:inline;">
+                    <button type="button" class="btn-logout" aria-label="Logout" onclick="showLogoutModal()">
                         <i class="fas fa-sign-out-alt"></i>
-                        <a href="?logout=1" class="logout-link">Logout</a>
+                        Logout
                         <i class="fas fa-chevron-down chevron-down" aria-hidden="true"></i>
                     </button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </aside>
+
+<!-- Logout Confirmation Modal -->
+<div id="logoutModal" class="logoutmodal">
+    <div class="logoutmodal-content">
+        <h3>Confirm Logout</h3>
+        <p>Are you sure you want to log out?</p>
+        <form method="post" class="logout-form" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+            <button type="submit" class="btn" name="logout" value="1">Logout</button>
+            <button type="button" class="btn-cancel" onclick="hideLogoutModal()">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function showLogoutModal() {
+        document.getElementById('logoutModal').style.display = 'flex';
+    }
+
+    function hideLogoutModal() {
+        document.getElementById('logoutModal').style.display = 'none';
+    }
+</script>
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout']) && $_POST['logout'] == '1') {
+    // Destroy session and redirect to login
+    session_unset();
+    session_destroy();
+    header('Location: ../login.php');
+    exit();
+}
+?>
