@@ -21,14 +21,14 @@ html {
 /* Left side - Image section */
 .login-image-section {
     flex: 1;
-    position: fixed;
-    background-color: #F4ED3C;
-    background-image: url('../../uploads/background2.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-    min-height: 100vh;
+position: fixed;
+background-color: #F4ED3C;
+background-image: url('../../uploads/background2.jpg');
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+position: relative;
+min-height: 100vh;
 }
 
 .image-overlay {
