@@ -102,6 +102,7 @@ if (isset($_POST['download_csv']) && $_POST['download_csv'] === '1') {
     <title>Manager Dashboard | Reports</title>
     <link rel="stylesheet" href="../assets/css/sidebar.css">
     <link rel="stylesheet" href="../assets/css/reports.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
 <body>
@@ -109,43 +110,41 @@ if (isset($_POST['download_csv']) && $_POST['download_csv'] === '1') {
 
     <div class="main-content">
         <h1 style="margin-bottom:18px;">Sales Reports</h1>
-        <form method="post" style="margin-bottom:18px;">
-            <input type="hidden" name="download_csv" value="1">
-            <button type="submit" class="btn">Download Sales CSV</button>
-        </form>
+
 
         <div class="dashboard-cards-row">
             <div class="dashboard-card">
-                <h4>Today's Sales</h4>
+                <h4><i class="fa-solid fa-calendar-day"></i> Today's Sales</h4>
                 <div class="card-value">Ksh <?= number_format($todaySales, 2) ?></div>
             </div>
             <div class="dashboard-card">
-                <h4>Weekly Sales</h4>
-                <div class="card-value">Ksh
-                    <?= is_array($weeklySales) && isset($weeklySales['total_amount']) ? number_format($weeklySales['total_amount'], 2) : number_format($weeklySales, 2) ?>
-                </div>
+                <h4><i class="fa-solid fa-calendar-week"></i> Weekly Sales</h4>
+                <div class="card-value">Ksh <?= number_format($weeklySales, 2) ?></div>
             </div>
             <div class="dashboard-card">
-                <h4>Monthly Sales</h4>
-                <div class="card-value">Ksh
-                    <?= is_array($monthlySales) && isset($monthlySales['total_amount']) ? number_format($monthlySales['total_amount'], 2) : number_format($monthlySales, 2) ?>
-                </div>
+                <h4><i class="fa-solid fa-calendar-alt"></i> Monthly Sales</h4>
+                <div class="card-value">Ksh <?= number_format($monthlySales, 2) ?></div>
             </div>
             <div class="dashboard-card">
-                <h4>Average Daily Sales</h4>
+                <h4><i class="fa-solid fa-chart-line"></i> Average Daily Sales</h4>
                 <div class="card-value">Ksh <?= number_format($averageDailySales, 2) ?></div>
             </div>
             <div class="dashboard-card">
-                <h4>Average Weekly Sales</h4>
+                <h4><i class="fa-solid fa-chart-bar"></i> Average Weekly Sales</h4>
                 <div class="card-value">Ksh <?= number_format($averageWeeklySales, 2) ?></div>
             </div>
             <div class="dashboard-card">
-                <h4>Average Monthly Sales</h4>
+                <h4><i class="fa-solid fa-calendar"></i> Average Monthly Sales</h4>
                 <div class="card-value">Ksh <?= number_format($averageMonthlySales, 2) ?></div>
             </div>
         </div>
 
-        <div class="dashboard-table" style="margin-top:32px;">
+        <form method="post">
+            <input type="hidden" name="download_csv" value="1">
+            <button type="submit" class="btn">Download Sales CSV</button>
+        </form>
+
+        <div class="dashboard-table" style="margin-top:12px;">
             <h3>All Sales</h3>
             <table style="width:100%; border-collapse:collapse;">
                 <thead>
