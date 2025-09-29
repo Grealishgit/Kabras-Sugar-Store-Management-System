@@ -1,3 +1,60 @@
+/* Dashboard row and tables */
+.dashboard-table h3{
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.2em;
+    color: #1BB02C;
+}
+
+.dashboard-row {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+}
+
+.dashboard-table {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #0001;
+    padding: 18px 18px 24px 18px;
+    min-width: 340px;
+    flex: 1;
+}
+
+.dashboard-table h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.2em;
+    color: #1BB02C;
+}
+
+.dashboard-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px #0001;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.dashboard-table thead {
+    background: #e3f2fd;
+    color: #1BB02C;
+}
+
+.dashboard-table tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
 /* Stat Cards for Dashboard */
 .stats-container {
     display: grid;

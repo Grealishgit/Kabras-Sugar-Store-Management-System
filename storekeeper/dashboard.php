@@ -92,7 +92,64 @@ if ($currentUser['role'] !== 'StoreKeeper') {
                 <p>Average Unit</p>
             </div>
         </div>
-        <!-- Add more dashboard content here -->
+
+        <!-- Recent Added Products Table -->
+        <div class="dashboard-table recent-products" style="flex:1; margin-bottom: 20px; min-width:340px;">
+            <h3>Recently Added Products</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Supplier</th>
+                        <th>Stock Qty</th>
+                        <th>Added On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach (array_slice($products, 0, 10) as $p): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($p['name']) ?></td>
+                            <td><?= htmlspecialchars($p['category']) ?></td>
+                            <td><?= htmlspecialchars($p['supplier']) ?></td>
+                            <td><?= $p['stock_quantity'] ?></td>
+                            <td><?= isset($p['created_at']) ? date('Y-m-d', strtotime($p['created_at'])) : '' ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <?php if (empty($products)): ?><tr>
+                            <td colspan="5">No products found.</td>
+                        </tr><?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+        <!-- Stock Level Table -->
+        <div class="dashboard-table stock-levels" style="flex:1; min-width:340px;">
+            <h3 style="margin-bottom:12px;">Stock Levels</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Stock Qty</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach (array_slice($products, 0, 10) as $p): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($p['name']) ?></td>
+                            <td><?= htmlspecialchars($p['category']) ?></td>
+                            <td><?= $p['stock_quantity'] ?></td>
+                            <td><?= htmlspecialchars($p['status']) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <?php if (empty($products)): ?><tr>
+                            <td colspan="4">No products found.</td>
+                        </tr><?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+
     </main>
 </body>
 
