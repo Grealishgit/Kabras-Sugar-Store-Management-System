@@ -1,0 +1,9 @@
+/* Table Styling */
+.main-content {
+    margin-left: 220px;
+    /* matches sidebar width */
+    padding: 20px;
+    min-height: 100vh;
+    background: #f4f6f9;
+    font-family: Arial, sans-serif;
+}
