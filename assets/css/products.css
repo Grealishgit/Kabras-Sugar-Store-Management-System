@@ -19,7 +19,7 @@
 .stat-card h2 {
     margin: 0 0 8px 0;
     font-size: 2.2em;
-    color: #1976d2;
+    color: #1BB02C;
     font-weight: bold;
 }
 
@@ -42,7 +42,7 @@
 
 .products-table thead {
     background: #e3f2fd;
-    color: #1976d2;
+    color: #1BB02C;
 }
 
 .products-table th,
@@ -59,7 +59,7 @@
 /* Download Button */
 .btn {
     padding: 8px 18px;
-    background: #1976d2;
+    background: #1BB02C;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -69,7 +69,7 @@
 }
 
 .btn:hover {
-    background: #1565c0;
+    background: #39bd48;
 }
 
 .main-content {
@@ -101,7 +101,7 @@
 .dashboard-table h3 {
     margin-bottom: 12px;
     font-size: 1.15rem;
-    color: #1976d2;
+    color: #1BB02C;
     font-weight: 600;
 }
 
@@ -120,7 +120,7 @@
 
 .dashboard-table th {
     background: #e3f2fd;
-    color: #1976d2;
+    color: #1BB02C;
     font-weight: 600;
 }
 
