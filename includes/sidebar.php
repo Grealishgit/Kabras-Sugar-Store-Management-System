@@ -27,8 +27,9 @@ $menu = [
     ],
     'Manager' => [
         ['label' => 'Sales Reports', 'href' => 'reports.php', 'icon' => 'fas fa-chart-line'],
-        ['label' => 'Discounts & Refunds', 'href' => 'discounts.php', 'icon' => 'fas fa-percentage'],
-        ['label' => 'Store Performance', 'href' => 'performance.php', 'icon' => 'fas fa-tachometer-alt'],
+        ['label' => 'Payments & Refunds', 'href' => 'payments.php', 'icon' => 'fas fa-percentage'],
+        ['label' => 'Store Performance', 'href' => 'products.php', 'icon' => 'fas fa-tachometer-alt'],
+        ['label' => 'Overall Staff', 'href' => 'staff.php', 'icon' => 'fas fa-user'],
     ],
     'Accountant' => [
         ['label' => 'Audit Reports', 'href' => 'audit_reports.php', 'icon' => 'fas fa-file-alt'],

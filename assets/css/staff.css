@@ -1,0 +1,142 @@
+/* Section Titles */
+.section-title {
+    margin-bottom: 16px;
+    font-size: 1.2em;
+    color: #1BB02C;
+    font-weight: 600;
+}
+
+/* Staff Stat Cards */
+.stats-container {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #0001;
+    padding: 24px 32px;
+    min-width: 160px;
+    text-align: center;
+    flex: 1;
+}
+
+.stat-card h2 {
+    margin: 0 0 8px 0;
+    font-size: 2.2em;
+    color: #1BB02C;
+    font-weight: bold;
+}
+
+.stat-card p {
+    margin: 0;
+    color: #333;
+    font-size: 1em;
+    font-weight: 500;
+}
+
+/* User Cards */
+.user-cards {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+}
+
+.user-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #0001;
+    padding: 18px 24px;
+    min-width: 220px;
+    margin-bottom: 12px;
+}
+
+.user-card h3 {
+    margin: 0 0 8px 0;
+    color: #1BB02C;
+    font-size: 1.2em;
+}
+
+.user-card p {
+    margin: 0 0 4px 0;
+    color: #333;
+    font-size: 0.98em;
+}
+
+/* Staff Table */
+.staff-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #0001;
+    margin-bottom: 24px;
+}
+
+.staff-table thead {
+    background: #e3f2fd;
+    color: #1BB02C;
+}
+
+.staff-table th,
+.staff-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.staff-table tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* CSV Button */
+.btn {
+    padding: 8px 18px;
+    background: #1BB02C;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn:hover {
+    background: #1BB02C;
+}
+
+.main-content {
+    margin-left: 220px;
+    /* matches sidebar width */
+    padding: 20px;
+    background: #f4f6f9;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.staff-table-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 70px;
+        background-color: #f4f6f8;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        margin-left: 70px;
+        background-color: #f4f6f8;
+    }
+
+}
