@@ -138,6 +138,36 @@ table tbody tr:hover {
     background-color: #f1f1f1;
 }
 
+.btn-danger {
+    padding: 8px 16px;
+    font-size: 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
+    background-color: #f44336;
+    transition: background-color 0.2s ease;
+}
+
+.btn-success {
+    padding: 8px 16px;
+    font-size: 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
+    background-color: #4CAF50;
+    transition: background-color 0.2s ease;
+}
+
+.btn-danger:hover {
+    background-color: #e53935;
+}
+
+.btn-success:hover {
+    background-color: #45a049;
+}
+
 /* Small buttons in table */
 .btn-small {
     padding: 5px 10px;
@@ -273,6 +303,13 @@ table tbody tr:hover {
 
 #searchFilterForm select.form-input {
     min-width: 160px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
 }
 
 #searchFilterForm button.btn {

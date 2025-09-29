@@ -204,8 +204,11 @@ $products = $productHandler->getAllProducts();
                 <p>Are you sure you want to delete this product?</p>
                 <form id="deleteProductForm" action="stock_entry.php" method="GET">
                     <input type="hidden" name="delete_id" id="delete_id">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                    <button type="button" class="btn" onclick="hideDeleteProductModal()">Cancel</button>
+                    <div class="action-buttons">
+                        <button type="submit" class="btn-danger">Delete</button>
+                        <button type="button" class="btn-success" onclick="hideDeleteProductModal()">Cancel</button>
+                    </div>
+
                 </form>
             </div>
         </div>
