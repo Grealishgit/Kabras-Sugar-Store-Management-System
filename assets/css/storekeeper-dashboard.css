@@ -1,3 +1,35 @@
+/* Stat Cards for Dashboard */
+.stats-container {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #0001;
+    padding: 30px 40px;
+    min-width: 200px;
+    text-align: center;
+    flex: 1;
+}
+
+.stat-card h2 {
+    margin: 0 0 8px 0;
+    font-size: 2.2em;
+    color: #1BB02C;
+    font-weight: bold;
+}
+
+.stat-card p {
+    margin: 0;
+    color: #333;
+    font-size: 1em;
+    font-weight: 500;
+}
+
 /* Table Styling */
 .main-content {
     margin-left: 220px;

@@ -113,7 +113,8 @@ $products = $productHandler->getProductsStock(10); // low stock threshold = 10
             <select name="status">
                 <option value="">All Status</option>
                 <option value="active"
-                    <?php if (isset($_GET['status']) && $_GET['status'] === 'active') echo 'selected'; ?>>Active</option>
+                    <?php if (isset($_GET['status']) && $_GET['status'] === 'active') echo 'selected'; ?>>Active
+                </option>
                 <option value="inactive"
                     <?php if (isset($_GET['status']) && $_GET['status'] === 'inactive') echo 'selected'; ?>>Inactive
                 </option>
@@ -121,8 +122,10 @@ $products = $productHandler->getProductsStock(10); // low stock threshold = 10
             <select name="low_stock">
                 <option value="">Low Stock?</option>
                 <option value="yes"
-                    <?php if (isset($_GET['low_stock']) && $_GET['low_stock'] === 'yes') echo 'selected'; ?>>Yes</option>
-                <option value="no" <?php if (isset($_GET['low_stock']) && $_GET['low_stock'] === 'no') echo 'selected'; ?>>
+                    <?php if (isset($_GET['low_stock']) && $_GET['low_stock'] === 'yes') echo 'selected'; ?>>Yes
+                </option>
+                <option value="no"
+                    <?php if (isset($_GET['low_stock']) && $_GET['low_stock'] === 'no') echo 'selected'; ?>>
                     No</option>
             </select>
             <button type="submit" class="btn">Filter</button>
