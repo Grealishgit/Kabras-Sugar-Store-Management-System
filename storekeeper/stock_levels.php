@@ -7,10 +7,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout']) && $_POST['
     exit();
 }
 
+
 require_once '../handlers/AuthHandler.php';
+require_once '../handlers/ProductHandler.php';
+
 
 
 $authHandler = new AuthHandler();
+$productHandler = new ProductHandler();
 
 
 // Ensure user is logged in
@@ -26,6 +30,8 @@ if ($currentUser['role'] !== 'StoreKeeper') {
     header('Location: ../login.php?error=Access denied. Cashier privileges required.');
     exit();
 }
+// Fetch products with stock info
+$products = $productHandler->getProductsStock(10); // low stock threshold = 10
 ?>
 
 
@@ -35,11 +41,94 @@ if ($currentUser['role'] !== 'StoreKeeper') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Stock Level | StoreKeeper</title>
+    <link rel="stylesheet" href="../assets/css/stock_level.css">
+    <link rel="stylesheet" href="../assets/css/sidebar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
 </head>
 
 <body>
+    <?php include '../includes/sidebar.php'; ?>
+    <main class="main-content">
 
+        <h1>Stock Levels</h1>
+        <p class="subtitle">Monitor current stock and low-stock alerts</p>
+
+        <?php
+        // Stat card calculations
+        $lowUnitCount = 0;
+        $lowQuantityCount = 0;
+        $inactiveCount = 0;
+        foreach ($products as $product) {
+            if (is_numeric($product['unit']) && $product['unit'] < 5) {
+                $lowUnitCount++;
+            }
+            if (is_numeric($product['stock_quantity']) && $product['stock_quantity'] < 10) {
+                $lowQuantityCount++;
+            }
+            if (isset($product['status']) && strtolower($product['status']) === 'inactive') {
+                $inactiveCount++;
+            }
+        }
+        ?>
+        <div class="stats-container">
+            <div class="stat-card low-unit stat-card-with-icon">
+                <div class="stat-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="stat-content">
+                    <h2><?php echo $lowUnitCount; ?></h2>
+                    <p>Products with Unit &lt; 5</p>
+                </div>
+            </div>
+
+            <div class="stat-card low-quantity stat-card-with-icon">
+                <div class="stat-icon">
+                    <i class="fas fa-boxes"></i>
+                </div>
+                <div class="stat-content">
+                    <h2><?php echo $lowQuantityCount; ?></h2>
+                    <p>Products with Quantity &lt; 10</p>
+                </div>
+            </div>
+
+            <div class="stat-card inactive-stock stat-card-with-icon">
+                <div class="stat-icon">
+                    <i class="fas fa-pause-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <h2><?php echo $inactiveCount; ?></h2>
+                    <p>Inactive Stock</p>
+                </div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Stock Quantity</th>
+                    <th>Unit</th>
+                    <th>Low Stock</th>
+                    <th>Expiry Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($products as $product): ?>
+                    <tr class="<?php echo $product['low_stock'] ? 'low-stock' : ''; ?>">
+                        <td><?php echo htmlspecialchars($product['name']); ?></td>
+                        <td><?php echo htmlspecialchars($product['category']); ?></td>
+                        <td><?php echo $product['stock_quantity']; ?></td>
+                        <td><?php echo htmlspecialchars($product['unit']); ?></td>
+                        <td><?php echo $product['low_stock'] ? 'Yes' : 'No'; ?></td>
+                        <td><?php echo $product['expiry_date'] ? date('Y-m-d', strtotime($product['expiry_date'])) : ''; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </main>
 </body>
 
 </html>

@@ -85,4 +85,15 @@ class ProductHandler
         $stmt->execute([':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    // In ProductHandler.php
+    public function getProductsStock($lowStockThreshold = 10)
+    {
+        $stmt = $this->db->prepare("SELECT *, 
+        CASE WHEN stock_quantity <= :threshold THEN 1 ELSE 0 END AS low_stock 
+        FROM products 
+        ORDER BY name ASC");
+        $stmt->execute([':threshold' => $lowStockThreshold]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
