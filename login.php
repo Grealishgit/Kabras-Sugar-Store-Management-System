@@ -12,7 +12,7 @@ if ($authHandler->isLoggedIn()) {
             header('Location: admin/dashboard.php');
             exit();
         } elseif ($role === 'manager') {
-            header('Location: admin/manager.php');
+            header('Location: manager/dashboard.php');
             exit();
         } elseif ($role === 'cashier') {
             header('Location: cashier/dashboard.php');
