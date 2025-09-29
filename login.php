@@ -45,10 +45,9 @@ if ($authHandler->isLoggedIn()) {
         <!-- Left side (branding/info) -->
         <div class="login-image-section">
             <div class="image-overlay">
-                <div class="logo-container">
-                    <img src="./uploads/kabras-logo.png" alt="">
-                </div>
+
                 <div class="welcome-content">
+
                     <h1>Welcome to Kabras Sugar Store</h1>
                     <p>Internal Management System for Inventory & Sales</p>
                 </div>
@@ -61,6 +60,9 @@ if ($authHandler->isLoggedIn()) {
                 <!-- LOGIN -->
                 <div class="login-section" id="loginSection">
                     <div class="login-header">
+                        <div class="logo-container">
+                            <img src="./uploads/kabras-logo.png" alt="">
+                        </div>
                         <h2>Welcome Back</h2>
                         <p>Sign in to your account</p>
                     </div>

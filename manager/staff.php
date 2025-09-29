@@ -48,6 +48,20 @@ if ($currentUser['role'] !== 'Manager') {
     header('Location: ../login.php?error=Access denied. Cashier privileges required.');
     exit();
 }
+
+require_once '../handlers/UserHandler.php';
+$userHandler = new UserHandler();
+$users = $userHandler->getAllUsers();
+$totalUsers = count($users);
+$roles = array_column($users, 'role');
+$uniqueRoles = array_unique($roles);
+$totalRoles = count($uniqueRoles);
+usort($users, function ($a, $b) {
+    return strtotime($b['created_at']) - strtotime($a['created_at']);
+});
+$recentUsers = array_slice($users, 0, 5);
+$roleCounts = array_count_values($roles);
+$topRole = $roleCounts ? array_search(max($roleCounts), $roleCounts) : '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,21 +77,6 @@ if ($currentUser['role'] !== 'Manager') {
 <body>
     <?php include '../includes/sidebar.php'; ?>
 
-    <?php
-    require_once '../handlers/UserHandler.php';
-    $userHandler = new UserHandler();
-    $users = $userHandler->getAllUsers();
-    $totalUsers = count($users);
-    $roles = array_column($users, 'role');
-    $uniqueRoles = array_unique($roles);
-    $totalRoles = count($uniqueRoles);
-    usort($users, function ($a, $b) {
-        return strtotime($b['created_at']) - strtotime($a['created_at']);
-    });
-    $recentUsers = array_slice($users, 0, 5);
-    $roleCounts = array_count_values($roles);
-    $topRole = $roleCounts ? array_search(max($roleCounts), $roleCounts) : '';
-    ?>
     <main class="main-content">
         <h1>Staff Overview</h1>
         <div class="stats-container">

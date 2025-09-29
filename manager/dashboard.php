@@ -8,8 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout']) && $_POST['
 }
 
 require_once '../handlers/AuthHandler.php';
-
-
 require_once '../handlers/ProductHandler.php';
 require_once '../handlers/UserHandler.php';
 require_once '../handlers/PaymentsHandler.php';
