@@ -1,0 +1,249 @@
+/* Expense Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 32px 28px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 100%;
+    margin: auto;
+    position: relative;
+    box-shadow: 0 4px 24px #0002;
+    animation: modalFadeIn 0.2s ease;
+}
+
+@keyframes modalFadeIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#closeExpenseModalBtn {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+#closeExpenseModalBtn:hover {
+    color: #e53935;
+}
+
+.add-expense-form .form-row {
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+.add-expense-form label {
+    font-size: 0.98rem;
+    color: #1BB02C;
+    margin-bottom: 4px;
+}
+
+.add-expense-form input[type="text"],
+.add-expense-form input[type="number"],
+.add-expense-form input[type="date"] {
+    padding: 7px 10px;
+    border: 1px solid #bdbdbd;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.add-expense-form input:focus {
+    border-color: #1BB02C;
+}
+
+.add-expense-form .btn {
+    background: #1BB02C;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.add-expense-form .btn:hover {
+    background: #1BB02C;
+}
+
+.main-content {
+    margin-left: 220px;
+    padding: 24px 18px 18px 18px;
+    min-height: 100vh;
+    background: #f4f6f9;
+    font-family: Arial, sans-serif;
+}
+
+.finance-title {
+    margin-bottom: 24px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1BB02C;
+}
+
+.finance-cards-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+}
+
+.finance-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #0001;
+    padding: 18px 22px;
+    min-width: 180px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.finance-card h4 {
+    margin: 0 0 8px 0;
+    font-size: 1.08rem;
+    color: #1BB02C;
+    font-weight: 600;
+}
+
+.finance-card .card-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #222;
+}
+
+.finance-card .net-profit.profit {
+    color: #43a047;
+}
+
+.finance-card .net-profit.loss {
+    color: #e53935;
+}
+
+.finance-tables-row {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.finance-table-card {
+    flex: 1;
+    min-width: 340px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #0001;
+    padding: 24px;
+}
+
+.finance-table-title {
+    margin-bottom: 12px;
+    color: #1BB02C;
+    font-size: 1.08rem;
+    font-weight: 600;
+}
+
+.finance-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #0001;
+    margin-bottom: 0;
+}
+
+.finance-table th,
+.finance-table td {
+    padding: 8px 10px;
+    text-align: left;
+}
+
+.finance-table thead {
+    background: #1BB02C;
+    color: #fff;
+}
+
+.finance-table.expenses-table thead {
+    background: #e53935;
+}
+
+.finance-table tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+.finance-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.finance-table tbody td {
+    background: #fff;
+}
+
+.btn .btn-primary {
+    background: #1BB02C;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.finance-card .net-profit-title {
+    color: #0b0b0b;
+    font-weight: 600;
+}
+
+@media (max-width: 900px) {
+    .main-content {
+        margin-left: 70px;
+    }
+
+    .finance-cards-row {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .finance-table-card {
+        min-width: 0;
+    }
+
+    .finance-tables-row {
+        flex-direction: column;
+        gap: 18px;
+    }
+}
