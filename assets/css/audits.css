@@ -7,6 +7,7 @@
     font-family: Arial, sans-serif;
 }
 
+/* Stats cards grid */
 .audit-stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -43,6 +44,7 @@
     margin-left: 4px;
 }
 
+/* Status colours */
 .green-bg {
     background: #d4edda !important;
     color: #155724 !important;
@@ -73,6 +75,7 @@
     text-align: center;
 }
 
+/* Table styling */
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -101,12 +104,14 @@
     background: #e2e6ea;
 }
 
+/* Heading */
 h2 {
     margin-bottom: 18px;
     color: #333;
     font-size: 1.6em;
 }
 
+/* Export button */
 .export-btn {
     background-color: #1BB02C;
     padding: 12px 16px;
@@ -119,4 +124,56 @@ h2 {
 
 .export-btn:hover {
     background-color: #17a34a;
+}
+
+/* --- Responsive Breakpoints --- */
+
+/* Tablet (≤ 992px) */
+@media (max-width: 992px) {
+    .main-content {
+        margin-left: 150px;
+        /* shrink sidebar margin */
+    }
+
+    .audit-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Small tablets / phones (≤ 768px) */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 70px;
+    }
+
+    .audit-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+/* Phones (≤ 480px) */
+@media (max-width: 480px) {
+    .main-content {
+        margin-left: 70px;
+        padding: 12px;
+    }
+
+    .audit-stats {
+        grid-template-columns: repeat(2, 1fr);
+        /* 1 per row */
+        gap: 12px;
+    }
+
+    .table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 }
