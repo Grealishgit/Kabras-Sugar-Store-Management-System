@@ -1,5 +1,5 @@
 .main-content {
-    margin-left: 250px;
+    margin-left: 220px;
     padding: 30px;
     background-color: #f4f6f8;
 }
@@ -197,6 +197,11 @@ tbody tr:hover {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .main-content {
+        margin-left: 70px;
+        background-color: #f4f6f8;
+    }
+
     .stats-container {
         flex-direction: column;
         gap: 16px;
@@ -228,6 +233,11 @@ tbody tr:hover {
 }
 
 @media (max-width: 480px) {
+    .main-content {
+        margin-left: 70px;
+        background-color: #f4f6f8;
+    }
+
     .stats-container {
         gap: 12px;
     }
