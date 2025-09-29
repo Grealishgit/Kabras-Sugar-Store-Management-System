@@ -1,6 +1,13 @@
 <?php
 session_start();
-require_once '../handlers/AuthHandler.php';
+                        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout']) && $_POST['logout'] == '1') {
+                            session_unset();
+                            session_destroy();
+                            header('Location: ../login.php');
+                            exit();
+                        }
+
+                        require_once '../handlers/AuthHandler.php';
 require_once '../handlers/PaymentsHandler.php';
 require_once '../handlers/SalesHandler.php';
 
