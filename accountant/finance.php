@@ -167,6 +167,45 @@ foreach ($payments as $p) {
     $recentPayments[] = $p;
 }
 
+
+// CSV export for recent payments
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['export_payments_csv'])) {
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="recent_payments.csv"');
+    $output = fopen('php://output', 'w');
+    fputcsv($output, ['Date', 'Customer', 'Amount', 'Payment Method', 'Recorded By'], ',', '"');
+    foreach ($recentPayments as $p) {
+        fputcsv($output, [
+            $p['date'] ?? $p['payment_date'],
+            $p['customer'] ?? 'N/A',
+            $p['amount'] ?? 0,
+            $p['method'] ?? 'N/A',
+            $p['recorded_by_name'] ?? ''
+        ], ',', '"');
+    }
+    fclose($output);
+    exit();
+}
+
+// CSV export for recent expenses
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['export_expenses_csv'])) {
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="recent_expenses.csv"');
+    $output = fopen('php://output', 'w');
+    fputcsv($output, ['Date', 'Vendor/Supplier', 'Amount', 'Category', 'Recorded By'], ',', '"');
+    foreach ($expenses as $e) {
+        fputcsv($output, [
+            $e['date'],
+            $e['vendor'],
+            $e['amount'],
+            $e['category'],
+            $e['recorded_by_name']
+        ], ',', '"');
+    }
+    fclose($output);
+    exit();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -235,17 +274,15 @@ foreach ($payments as $p) {
             </div>
         </div>
         <!-- Add Expense Button and Modal -->
-        <div style="margin-bottom: 18px;">
-            <button id="openExpenseModalBtn" class="btn btn-primary"
-                style="padding: 8px 18px; font-size: 1rem; background: #1BB02C; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Add
-                Expense</button>
+        <div class="add-expense-container">
+            <button id="openExpenseModalBtn" class="btn">Add Expense</button>
+
+
+
         </div>
-        <div id="addExpenseModal" class="modal"
-            style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.25); z-index:1000; align-items:center; justify-content:center;">
-            <div class="modal-content"
-                style="background:#fff; padding:32px 28px; border-radius:10px; max-width:400px; margin:auto; position:relative;">
-                <span id="closeExpenseModalBtn"
-                    style="position:absolute; top:12px; right:18px; font-size:1.5rem; cursor:pointer;">&times;</span>
+        <div id="addExpenseModal" class="modal">
+            <div class="modal-content">
+                <span id="closeExpenseModalBtn">&times;</span>
                 <h3 class="finance-table-title">Add Expense</h3>
                 <form method="post" class="add-expense-form">
                     <input type="hidden" name="add_expense" value="1">
@@ -273,6 +310,10 @@ foreach ($payments as $p) {
         </div>
         <div class="finance-tables-row">
             <div class="finance-table-card">
+                <form method="post" style="display:inline; float:right; margin-left:8px;">
+                    <input type="hidden" name="export_payments_csv" value="1">
+                    <button type="submit" class="btn btn-export-payments">Export Payments CSV</button>
+                </form>
                 <h3 class="finance-table-title">Recent Payments</h3>
                 <table class="finance-table payments-table">
                     <thead>
@@ -301,7 +342,12 @@ foreach ($payments as $p) {
                 </table>
             </div>
             <div class="finance-table-card">
+                <form method="post" style="display:inline; float:right; margin-left:8px;">
+                    <input type="hidden" name="export_expenses_csv" value="1">
+                    <button type="submit" class="btn btn-export-expenses">Export Expenses CSV</button>
+                </form>
                 <h3 class="finance-table-title">Recent Expenses / Purchases</h3>
+
                 <table class="finance-table expenses-table">
                     <thead>
                         <tr>
