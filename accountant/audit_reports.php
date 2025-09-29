@@ -7,6 +7,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout']) && $_POST['
     exit();
 }
 
+function exportAuditReportsCSV($auditReports)
+{
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="audit_reports.csv"');
+
+    $output = fopen('php://output', 'w');
+
+    // Header row
+    fputcsv(
+        $output,
+        ['ID', 'Date', 'Type', 'Conducted By', 'Status', 'Comments', 'Follow Up Actions', 'Completion Date'],
+        ',',
+        '"',
+        '\\' // <-- escape char added
+    );
+
+    // Data rows
+    foreach ($auditReports as $ar) {
+        fputcsv(
+            $output,
+            [
+                $ar['id'],
+                $ar['audit_date'],
+                $ar['audit_type'],
+                $ar['conducted_by_name'] ?? $ar['conducted_by'],
+                $ar['status'],
+                $ar['comments'] ?? '',
+                $ar['follow_up_actions'] ?? '',
+                $ar['completion_date'] ?? ''
+            ],
+            ',',
+            '"',
+            '\\' // <-- escape char added
+        );
+    }
+
+    fclose($output);
+    exit();
+}
+
+
 
 require_once '../handlers/AuthHandler.php';
 require_once '../handlers/AuditHandler.php';
@@ -25,6 +66,17 @@ $currentUser = $authHandler->getCurrentUser();
 if ($currentUser['role'] !== 'Accountant') {
     header('Location: ../login.php?error=Access denied. Cashier privileges required.');
     exit();
+}
+
+
+
+// 
+
+// Handle export request
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['export_audit_reports_csv'])) {
+    $auditHandler = new AuditHandler();
+    $auditReports = $auditHandler->getAllAuditReports();
+    exportAuditReportsCSV($auditReports);
 }
 
 $auditHandler = new AuditHandler();
@@ -85,6 +137,13 @@ $auditReports = $auditHandler->getAllAuditReports();
                 </div>
             <?php endforeach; ?>
         </div>
+
+
+        <form method="POST" style="margin-bottom: 15px;">
+            <input type="hidden" name="export_audit_reports_csv" value="1">
+            <button type="submit" class="export-btn">Export as CSV</button>
+        </form>
+
         <table class="table">
             <thead>
                 <tr>
