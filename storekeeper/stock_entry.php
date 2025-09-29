@@ -210,6 +210,101 @@ $products = $productHandler->getAllProducts();
             </div>
         </div>
 
+        <!-- Search and Filters -->
+        <section class="card-section" style="margin-bottom:24px;">
+            <form id="searchFilterForm" method="get"
+                style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+                <input type="text" name="search" placeholder="Search by name, batch, supplier..."
+                    value="<?php echo htmlspecialchars($_GET['search'] ?? ''); ?>" class="form-input"
+                    style="min-width:200px;">
+                <select name="filter_category" class="form-input">
+                    <option value="">All Categories</option>
+                    <option value="Sugar" <?php if (($_GET['filter_category'] ?? '') == 'Sugar') echo 'selected'; ?>>
+                        Sugar
+                    </option>
+                    <option value="Molasses"
+                        <?php if (($_GET['filter_category'] ?? '') == 'Molasses') echo 'selected'; ?>>
+                        Molasses</option>
+                    <option value="Bagasse"
+                        <?php if (($_GET['filter_category'] ?? '') == 'Bagasse') echo 'selected'; ?>>
+                        Bagasse</option>
+                    <option value="Ethanol"
+                        <?php if (($_GET['filter_category'] ?? '') == 'Ethanol') echo 'selected'; ?>>
+                        Ethanol</option>
+                    <option value="Pressmud"
+                        <?php if (($_GET['filter_category'] ?? '') == 'Pressmud') echo 'selected'; ?>>
+                        Pressmud</option>
+                    <option value="Filter Cake"
+                        <?php if (($_GET['filter_category'] ?? '') == 'Filter Cake') echo 'selected'; ?>>Filter Cake
+                    </option>
+                    <option value="Cane Trash"
+                        <?php if (($_GET['filter_category'] ?? '') == 'Cane Trash') echo 'selected'; ?>>Cane Trash
+                    </option>
+                    <option value="Cane Juice"
+                        <?php if (($_GET['filter_category'] ?? '') == 'Cane Juice') echo 'selected'; ?>>Cane Juice
+                    </option>
+                    <option value="Cane Syrup"
+                        <?php if (($_GET['filter_category'] ?? '') == 'Cane Syrup') echo 'selected'; ?>>Cane Syrup
+                    </option>
+                    <option value="Sugarcane"
+                        <?php if (($_GET['filter_category'] ?? '') == 'Sugarcane') echo 'selected'; ?>>Sugarcane
+                    </option>
+                    <option value="Other" <?php if (($_GET['filter_category'] ?? '') == 'Other') echo 'selected'; ?>>
+                        Other
+                    </option>
+                </select>
+                <select name="filter_status" class="form-input">
+                    <option value="">All Status</option>
+                    <option value="active" <?php if (($_GET['filter_status'] ?? '') == 'active') echo 'selected'; ?>>
+                        Active
+                    </option>
+                    <option value="inactive"
+                        <?php if (($_GET['filter_status'] ?? '') == 'inactive') echo 'selected'; ?>>
+                        Inactive</option>
+                </select>
+                <select name="filter_supplier" class="form-input">
+                    <option value="">All Suppliers</option>
+                    <?php
+                    $suppliers = array_unique(array_filter(array_map(function ($p) {
+                        return $p['supplier'];
+                    }, $products)));
+                    foreach ($suppliers as $sup) {
+                        if (!$sup) continue;
+                        echo '<option value="' . htmlspecialchars($sup) . '"' . (($_GET['filter_supplier'] ?? '') == $sup ? ' selected' : '') . '>' . htmlspecialchars($sup) . '</option>';
+                    }
+                    ?>
+                </select>
+                <button type="submit" class="btn">Apply</button>
+            </form>
+        </section>
+
+        <?php
+        // Filter products
+        if (!empty($_GET['search'])) {
+            $search = strtolower(trim($_GET['search']));
+            $products = array_filter($products, function ($p) use ($search) {
+                return strpos(strtolower($p['name']), $search) !== false
+                    || strpos(strtolower($p['batch_number']), $search) !== false
+                    || strpos(strtolower($p['supplier']), $search) !== false;
+            });
+        }
+        if (!empty($_GET['filter_category'])) {
+            $products = array_filter($products, function ($p) {
+                return $p['category'] == $_GET['filter_category'];
+            });
+        }
+        if (!empty($_GET['filter_status'])) {
+            $products = array_filter($products, function ($p) {
+                return $p['status'] == $_GET['filter_status'];
+            });
+        }
+        if (!empty($_GET['filter_supplier'])) {
+            $products = array_filter($products, function ($p) {
+                return $p['supplier'] == $_GET['filter_supplier'];
+            });
+        }
+        ?>
+
         <!-- Stock Table -->
         <section id="stock-table" class="card-section">
             <h2>Current Stock</h2>
