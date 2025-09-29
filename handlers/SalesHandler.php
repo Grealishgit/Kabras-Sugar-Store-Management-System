@@ -135,12 +135,21 @@ class SalesHandler
             'total_amount' => 0
         ];
 
-        $stmt = $this->db->prepare("
-            SELECT s.id 
-            FROM sales s 
-            WHERE s.user_id = :uid AND s.sale_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-        ");
-        $stmt->execute([':uid' => $cashierId]);
+        if ($cashierId == 0) {
+            $stmt = $this->db->prepare("
+                SELECT s.id 
+                FROM sales s 
+                WHERE s.sale_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+            ");
+            $stmt->execute();
+        } else {
+            $stmt = $this->db->prepare("
+                SELECT s.id 
+                FROM sales s 
+                WHERE s.user_id = :uid AND s.sale_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+            ");
+            $stmt->execute([':uid' => $cashierId]);
+        }
         $sales = $stmt->fetchAll(PDO::FETCH_COLUMN);
         $stats['total_transactions'] = count($sales);
 
@@ -169,14 +178,24 @@ class SalesHandler
             'total_amount' => 0
         ];
 
-        $stmt = $this->db->prepare("
-            SELECT s.id 
-            FROM sales s 
-            WHERE s.user_id = :uid 
-            AND MONTH(s.sale_date) = MONTH(CURDATE()) 
-            AND YEAR(s.sale_date) = YEAR(CURDATE())
-        ");
-        $stmt->execute([':uid' => $cashierId]);
+        if ($cashierId == 0) {
+            $stmt = $this->db->prepare("
+                SELECT s.id 
+                FROM sales s 
+                WHERE MONTH(s.sale_date) = MONTH(CURDATE()) 
+                AND YEAR(s.sale_date) = YEAR(CURDATE())
+            ");
+            $stmt->execute();
+        } else {
+            $stmt = $this->db->prepare("
+                SELECT s.id 
+                FROM sales s 
+                WHERE s.user_id = :uid 
+                AND MONTH(s.sale_date) = MONTH(CURDATE()) 
+                AND YEAR(s.sale_date) = YEAR(CURDATE())
+            ");
+            $stmt->execute([':uid' => $cashierId]);
+        }
         $sales = $stmt->fetchAll(PDO::FETCH_COLUMN);
         $stats['total_transactions'] = count($sales);
 
