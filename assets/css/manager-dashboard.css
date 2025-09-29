@@ -188,10 +188,12 @@ body {
     font-weight: 600;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
 }
 
 .dashboard-card .card-value {
+    text-align: center;
     font-size: 35px;
     font-weight: 700;
     color: #222;
