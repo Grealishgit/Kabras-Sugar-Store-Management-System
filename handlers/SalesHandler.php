@@ -66,6 +66,19 @@ class SalesHandler
         return $saleId;
     }
 
+    // Get all sales (for manager)
+    public function getAllSales()
+    {
+        $stmt = $this->db->prepare("
+            SELECT s.*, si.product_id, si.quantity, si.unit_price, p.name AS product_name
+            FROM sales s
+            JOIN sale_items si ON s.id = si.sale_id
+            JOIN products p ON si.product_id = p.id
+            ORDER BY s.sale_date DESC
+        ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     // Get sales for a cashier
     public function getSalesByCashier($cashierId)
     {
