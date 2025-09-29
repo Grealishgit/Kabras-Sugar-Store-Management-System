@@ -123,5 +123,35 @@ CREATE TABLE expenses (
 );
 
 
+CREATE TABLE compliance_audits (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    audit_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    audit_type ENUM('Financial', 'Stock', 'Safety', 'Regulatory') NOT NULL,
+    conducted_by INT NOT NULL, -- user_id of the inspector
+    status ENUM('Pending', 'Passed', 'Failed') NOT NULL DEFAULT 'Pending',
+    comments TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (conducted_by) REFERENCES users(id)
+);
+
+
+CREATE TABLE compliance_violations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    violation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    category ENUM('Financial', 'Stock', 'Safety', 'Legal') NOT NULL,
+    reported_by INT NOT NULL, -- user_id of reporter
+    description TEXT NOT NULL,
+    severity ENUM('Low', 'Medium', 'High') NOT NULL DEFAULT 'Low',
+    status ENUM('Pending', 'Resolved') NOT NULL DEFAULT 'Pending',
+    resolution_notes TEXT,
+    resolved_by INT DEFAULT NULL, -- user_id of person who resolved it
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (reported_by) REFERENCES users(id),
+    FOREIGN KEY (resolved_by) REFERENCES users(id)
+);
+
+
 
 -- Products
