@@ -1,0 +1,108 @@
+.main-content {
+    margin-left: 220px;
+    /* matches sidebar width */
+    padding: 20px;
+    min-height: 100vh;
+    background: #f4f6f9;
+    font-family: Arial, sans-serif;
+}
+
+.audit-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.stat {
+    background: #fff;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.stat p {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.stat .label {
+    font-weight: bold;
+    margin-right: 8px;
+    color: #555;
+}
+
+.stat .value {
+    font-weight: bold;
+    padding: 10px 14px;
+    border-radius: 25px;
+    margin-left: 4px;
+}
+
+.green-bg {
+    background: #d4edda !important;
+    color: #155724 !important;
+}
+
+.red-bg {
+    background: #f8d7da !important;
+    color: #721c24 !important;
+}
+
+.yellow-bg {
+    background: #fff3cd !important;
+    color: #856404 !important;
+}
+
+.blue-bg {
+    background: #cce5ff !important;
+    color: #004085 !important;
+}
+
+.gray-bg {
+    background: #e2e3e5 !important;
+    color: #383d41 !important;
+}
+
+.status-cell {
+    font-weight: bold;
+    text-align: center;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+}
+
+.table th,
+.table td {
+    padding: 10px 12px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+.table th {
+    background: #e9ecef;
+    font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+.table tbody tr:hover {
+    background: #e2e6ea;
+}
+
+h2 {
+    margin-bottom: 18px;
+    color: #333;
+    font-size: 1.6em;
+}
