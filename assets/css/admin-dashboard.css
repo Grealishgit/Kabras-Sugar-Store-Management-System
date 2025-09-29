@@ -212,6 +212,24 @@ h1 {
     background: #dce9ff;
 }
 
+/* Role Badges */
+.role-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 2px;
+    text-transform: capitalize;
+}
+.role-admin { background: #d9534f; }
+.role-manager { background: #0275d8; }
+.role-cashier { background: #5cb85c; }
+.role-accountant { background: #f0ad4e; }
+.role-storekeeper { background: #5bc0de; }
+/* Add more role colors as needed */
+
 /* === Responsive Styles === */
 
 /* Tablets (<= 992px) */

@@ -1,4 +1,12 @@
 <?php session_start();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout']) && $_POST['logout'] == '1') {
+    session_unset();
+    session_destroy();
+    header('Location: ../login.php');
+    exit();
+}
+
 require_once '../handlers/AuthHandler.php';
 require_once '../app/models/User.php';
 
@@ -78,8 +86,8 @@ foreach ($users as $user) {
     <main class="main-content">
         <div class="container">
             <h1>Manage User Roles</h1><?php if (isset($_GET['success'])): ?>
-                <p class="success-msg"><?= htmlspecialchars($_GET['success']); ?>
-                </p><?php endif; ?>
+            <p class="success-msg"><?= htmlspecialchars($_GET['success']); ?>
+            </p><?php endif; ?>
 
             <div class="stats-cards">
                 <div class="stat-card admin">
@@ -116,40 +124,40 @@ foreach ($users as $user) {
                 </thead>
                 <tbody>
                     <?php foreach ($users as $user): ?><tr>
-                            <td><?= htmlspecialchars($user['id']); ?></td>
-                            <td><?= htmlspecialchars($user['name']); ?></td>
-                            <td><?= htmlspecialchars($user['email']); ?></td>
-                            <td><?= htmlspecialchars(date('Y-m-d', strtotime($user['created_at']))); ?></td>
-                            <td>
-                                <form method="POST" action="roles.php" class="role-form">
-                                    <input type="hidden" name="user_id" value="<?= $user['id']; ?>">
-                                    <select name="role">
-                                        <option value="Admin" <?= $user['role'] === 'Admin' ? 'selected' : ''; ?>>Admin
-                                        </option>
-                                        <option value="Manager" <?= $user['role'] === 'Manager' ? 'selected' : ''; ?>>
-                                            Manager</option>
-                                        <option value="Cashier" <?= $user['role'] === 'Cashier' ? 'selected' : ''; ?>>
-                                            Cashier</option>
-                                        <option value="Accountant" <?= $user['role'] === 'Accountant' ? 'selected' : ''; ?>>
-                                            Accountant</option>
-                                        <option value="StoreKeeper"
-                                            <?= $user['role'] === 'StoreKeeper' ? 'selected' : ''; ?>>
-                                            Store Keeper</option>
-                                    </select>
-                                    <button type="submit" name="update_role">Update</button>
-                                </form>
-                            </td>
-                            <td><?php if ($user['id'] !== $currentUser['id']): ?>
-                                    <form method="POST" action="roles.php"
-                                        onsubmit="return confirm('Are you sure you want to delete this user?');">
-                                        <input type="hidden" name="user_id" value="<?= $user['id']; ?>">
-                                        <button type="submit" name="delete_user" class="btn-danger">Delete</button>
-                                    </form>
-                                <?php else: ?>
-                                    <em>Main Admin</em>
-                                <?php endif; ?>
-                            </td>
-                        </tr><?php endforeach; ?>
+                        <td><?= htmlspecialchars($user['id']); ?></td>
+                        <td><?= htmlspecialchars($user['name']); ?></td>
+                        <td><?= htmlspecialchars($user['email']); ?></td>
+                        <td><?= htmlspecialchars(date('Y-m-d', strtotime($user['created_at']))); ?></td>
+                        <td>
+                            <form method="POST" action="roles.php" class="role-form">
+                                <input type="hidden" name="user_id" value="<?= $user['id']; ?>">
+                                <select name="role">
+                                    <option value="Admin" <?= $user['role'] === 'Admin' ? 'selected' : ''; ?>>Admin
+                                    </option>
+                                    <option value="Manager" <?= $user['role'] === 'Manager' ? 'selected' : ''; ?>>
+                                        Manager</option>
+                                    <option value="Cashier" <?= $user['role'] === 'Cashier' ? 'selected' : ''; ?>>
+                                        Cashier</option>
+                                    <option value="Accountant" <?= $user['role'] === 'Accountant' ? 'selected' : ''; ?>>
+                                        Accountant</option>
+                                    <option value="StoreKeeper"
+                                        <?= $user['role'] === 'StoreKeeper' ? 'selected' : ''; ?>>
+                                        Store Keeper</option>
+                                </select>
+                                <button type="submit" name="update_role">Update</button>
+                            </form>
+                        </td>
+                        <td><?php if ($user['id'] !== $currentUser['id']): ?>
+                            <form method="POST" action="roles.php"
+                                onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                <input type="hidden" name="user_id" value="<?= $user['id']; ?>">
+                                <button type="submit" name="delete_user" class="btn-danger">Delete</button>
+                            </form>
+                            <?php else: ?>
+                            <em>Main Admin</em>
+                            <?php endif; ?>
+                        </td>
+                    </tr><?php endforeach; ?>
                 </tbody>
             </table>
         </div>

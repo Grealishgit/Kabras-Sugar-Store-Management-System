@@ -1,5 +1,4 @@
 <?php
-// ...existing code...
 /**
  * Authentication Handler for Kabras Sugar Store
  * Handles login, registration (only by admin), logout, and session management
@@ -62,6 +61,8 @@ class AuthHandler
         $user = $this->userModel->findByEmail($email);
 
         if ($user && password_verify($password, $user['password'])) {
+            // Update last_login timestamp
+            $this->userModel->updateLastLogin($user['id']);
             $this->createUserSession($user);
 
             return $this->successResponse([

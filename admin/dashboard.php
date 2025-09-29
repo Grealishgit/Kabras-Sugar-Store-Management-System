@@ -1,5 +1,11 @@
 <?php
 session_start();
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout']) && $_POST['logout'] == '1') {
+    session_unset();
+    session_destroy();
+    header('Location: ../login.php');
+    exit();
+}
 require_once '../handlers/AuthHandler.php';
 require_once '../app/models/User.php';
 
@@ -116,7 +122,7 @@ $totalUsers = count($users);
                                 <tr>
                                     <td><?= htmlspecialchars($u['name']); ?></td>
                                     <td><?= htmlspecialchars($u['email']); ?></td>
-                                    <td><?= htmlspecialchars($u['role']); ?></td>
+                                    <td><span class="role-badge role-<?= strtolower($u['role']) ?>"><?= htmlspecialchars($u['role']); ?></span></td>
                                     <td><?= date('M j, Y g:i A', strtotime($u['last_login'])); ?></td>
                                 </tr>
                             <?php endforeach; ?>

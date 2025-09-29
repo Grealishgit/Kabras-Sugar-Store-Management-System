@@ -125,8 +125,7 @@ class User
      */
     public function getAllUsers()
     {
-        $sql = "SELECT id, name, email, phone, national_id, role, created_at 
-                FROM users ORDER BY created_at DESC";
+        $sql = "SELECT id, name, email, phone, national_id, role, created_at, last_login FROM users ORDER BY created_at DESC";
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -149,5 +148,15 @@ class User
         $sql = "UPDATE users SET role = :role WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([':role' => $role, ':id' => $id]);
+    }
+
+    /**
+     * Update last_login timestamp for user
+     */
+    public function updateLastLogin($userId)
+    {
+        $sql = "UPDATE users SET last_login = NOW() WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([':id' => $userId]);
     }
 }
