@@ -40,13 +40,29 @@
 
 /* brand */
 .sidebar-brand {
-    padding: 6px 12px 18px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 0 0;
     margin-bottom: 6px;
+}
+
+.sidebar-brand img {
+    max-width: 70px;
+    height: auto;
+    display: block;
+}
+
+.brand-name {
+    font-weight: 700;
+    color: var(--accent);
 }
 
 .brand-link {
     display: flex;
     align-items: center;
+    margin-right: 25px;
     gap: 10px;
     color: var(--text);
     text-decoration: none;
@@ -54,10 +70,10 @@
     font-size: 16px;
 }
 
-.brand-link i {
+/* .brand-link i {
     font-size: 18px;
     opacity: 0.95;
-}
+} */
 
 .brand-text {
     letter-spacing: 0.3px;

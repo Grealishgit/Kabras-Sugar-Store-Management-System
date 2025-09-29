@@ -130,8 +130,9 @@ foreach ($salesByDay as $date => $amount) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body><?php include '../includes/sidebar.php';
-        ?><div class="main-content">
+<body>
+    <?php include '../includes/sidebar.php'; ?>
+    <div class="main-content">
         <h1 style="margin-bottom:18px;">Manager Dashboard</h1>
         <div class="dashboard-cards-row">
             <div class="dashboard-card">
@@ -170,13 +171,13 @@ foreach ($salesByDay as $date => $amount) {
                     <h3><i class="fa-solid fa-users"></i>Role Distribution</h3>
 
                     <div class="role-distribution-bars"><?php foreach ($roleCounts as $role => $count): ?><div
-                                class="role-bar-row"><span class="role-bar-label"><?= htmlspecialchars($role) ?></span>
-                                <div class="role-bar-bg">
-                                    <div class="role-bar-fill"
-                                        style="width:<?= $roleTotal > 0 ? round($count / $roleTotal * 100, 2) : 0 ?>%;">
-                                    </div>
-                                </div><span class="role-bar-count"><?= $count ?></span>
-                            </div><?php endforeach; ?>
+                            class="role-bar-row"><span class="role-bar-label"><?= htmlspecialchars($role) ?></span>
+                            <div class="role-bar-bg">
+                                <div class="role-bar-fill"
+                                    style="width:<?= $roleTotal > 0 ? round($count / $roleTotal * 100, 2) : 0 ?>%;">
+                                </div>
+                            </div><span class="role-bar-count"><?= $count ?></span>
+                        </div><?php endforeach; ?>
                     </div>
                     <div class="manager-main">
                         <div class="manager-card">
@@ -191,109 +192,109 @@ foreach ($salesByDay as $date => $amount) {
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Set real data for cards
-        document.getElementById('productsCount').textContent = <?= json_encode($productsCount) ?>;
-        document.getElementById('staffCount').textContent = <?= json_encode($staffCount) ?>;
-        document.getElementById('paymentsTotal').textContent = 'Ksh ' + Number(<?= json_encode($paymentsTotal) ?>)
-            .toLocaleString();
-        document.getElementById('salesTotal').textContent = 'Ksh ' + Number(<?= json_encode($salesTotal) ?>)
-            .toLocaleString();
-        document.getElementById('managersCount').textContent = <?= json_encode($managersCount) ?>;
+    // Set real data for cards
+    document.getElementById('productsCount').textContent = <?= json_encode($productsCount) ?>;
+    document.getElementById('staffCount').textContent = <?= json_encode($staffCount) ?>;
+    document.getElementById('paymentsTotal').textContent = 'Ksh ' + Number(<?= json_encode($paymentsTotal) ?>)
+        .toLocaleString();
+    document.getElementById('salesTotal').textContent = 'Ksh ' + Number(<?= json_encode($salesTotal) ?>)
+        .toLocaleString();
+    document.getElementById('managersCount').textContent = <?= json_encode($managersCount) ?>;
 
-        // Product Category Pie Chart
-        new Chart(document.getElementById('categoryPieChart'), {
+    // Product Category Pie Chart
+    new Chart(document.getElementById('categoryPieChart'), {
 
-                type: 'pie',
-                data: {
+            type: 'pie',
+            data: {
 
-                    labels: <?= json_encode($categoryLabels) ?>,
-                    datasets: [{
-                            data: <?= json_encode($categoryData) ?>,
-                            backgroundColor: ['#1976d2', '#43a047', '#ffa726', '#e53935', '#8e24aa', '#00bcd4',
-                                '#fbc02d', '#c62828'
-                            ]
-                        }
+                labels: <?= json_encode($categoryLabels) ?>,
+                datasets: [{
+                        data: <?= json_encode($categoryData) ?>,
+                        backgroundColor: ['#1976d2', '#43a047', '#ffa726', '#e53935', '#8e24aa', '#00bcd4',
+                            '#fbc02d', '#c62828'
+                        ]
+                    }
 
-                    ]
-                }
+                ]
+            }
 
-                ,
-                options: {
+            ,
+            options: {
 
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
-                        }
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
                     }
                 }
             }
+        }
 
-        );
+    );
 
-        // Sales Trend Chart (Last 7 Days)
-        new Chart(document.getElementById('salesLineChart'), {
+    // Sales Trend Chart (Last 7 Days)
+    new Chart(document.getElementById('salesLineChart'), {
 
-                type: 'line',
-                data: {
+            type: 'line',
+            data: {
 
-                    labels: <?= json_encode($salesDayLabels) ?>,
-                    datasets: [{
-                            label: 'Sales (Ksh)',
-                            data: <?= json_encode($salesDayData) ?>,
-                            borderColor: '#1976d2',
-                            backgroundColor: 'rgba(25,118,210,0.1)',
-                            fill: true,
-                            tension: 0.3
-                        }
+                labels: <?= json_encode($salesDayLabels) ?>,
+                datasets: [{
+                        label: 'Sales (Ksh)',
+                        data: <?= json_encode($salesDayData) ?>,
+                        borderColor: '#1976d2',
+                        backgroundColor: 'rgba(25,118,210,0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }
 
-                    ]
-                }
+                ]
+            }
 
-                ,
-                options: {
+            ,
+            options: {
 
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
                     }
                 }
             }
+        }
 
-        );
+    );
 
-        // Payment Methods Doughnut Chart
-        new Chart(document.getElementById('paymentDoughnutChart'), {
+    // Payment Methods Doughnut Chart
+    new Chart(document.getElementById('paymentDoughnutChart'), {
 
-                type: 'doughnut',
-                data: {
+            type: 'doughnut',
+            data: {
 
-                    labels: <?= json_encode($paymentMethodLabels) ?>,
-                    datasets: [{
-                            data: <?= json_encode($paymentMethodData) ?>,
-                            backgroundColor: ['#43a047', '#ffa726', '#1976d2', '#e53935', '#8e24aa', '#00bcd4',
-                                '#fbc02d', '#c62828'
-                            ]
-                        }
+                labels: <?= json_encode($paymentMethodLabels) ?>,
+                datasets: [{
+                        data: <?= json_encode($paymentMethodData) ?>,
+                        backgroundColor: ['#43a047', '#ffa726', '#1976d2', '#e53935', '#8e24aa', '#00bcd4',
+                            '#fbc02d', '#c62828'
+                        ]
+                    }
 
-                    ]
-                }
+                ]
+            }
 
-                ,
-                options: {
+            ,
+            options: {
 
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
-                        }
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
                     }
                 }
             }
+        }
 
-        );
+    );
     </script>
 </body>
 

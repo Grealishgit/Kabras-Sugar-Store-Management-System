@@ -54,20 +54,20 @@ if (isset($menu[$role])) {
         <div class="sidebar-brand">
             <a href="dashboard.php" class="brand-link">
                 <i class="fas fa-store"></i>
-                <span class="brand-text">Kabras | Store</span>
+                <span class="brand-text"> Kabras | Store</span>
             </a>
         </div>
 
         <nav class="sidebar-nav">
             <ul>
                 <?php foreach ($items as $it): ?>
-                <li>
-                    <a href="<?= htmlspecialchars($it['href']) ?>"
-                        class="<?= (basename($_SERVER['PHP_SELF']) === basename($it['href'])) ? 'active' : '' ?>">
-                        <i class="<?= htmlspecialchars($it['icon']) ?>" aria-hidden="true"></i>
-                        <span class="label"><?= htmlspecialchars($it['label']) ?></span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="<?= htmlspecialchars($it['href']) ?>"
+                            class="<?= (basename($_SERVER['PHP_SELF']) === basename($it['href'])) ? 'active' : '' ?>">
+                            <i class="<?= htmlspecialchars($it['icon']) ?>" aria-hidden="true"></i>
+                            <span class="label"><?= htmlspecialchars($it['label']) ?></span>
+                        </a>
+                    </li>
                 <?php endforeach; ?>
             </ul>
         </nav>
@@ -126,13 +126,13 @@ if (isset($menu[$role])) {
 </div>
 
 <script>
-function showLogoutModal() {
-    document.getElementById('logoutModal').style.display = 'flex';
-}
+    function showLogoutModal() {
+        document.getElementById('logoutModal').style.display = 'flex';
+    }
 
-function hideLogoutModal() {
-    document.getElementById('logoutModal').style.display = 'none';
-}
+    function hideLogoutModal() {
+        document.getElementById('logoutModal').style.display = 'none';
+    }
 </script>
 
 <?php
