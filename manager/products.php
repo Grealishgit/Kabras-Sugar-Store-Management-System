@@ -229,7 +229,7 @@ if ($currentUser['role'] !== 'Manager') {
             style="width:100%; border-collapse:collapse; background:#fff; border-radius:8px; box-shadow:0 2px 8px #0001;">
             <table class="products-table"
                 style="width:100%; border-collapse:collapse; background:#fff; border-radius:8px; box-shadow:0 2px 8px #0001;">
-                <thead style="background:#6aec79; color:#1BB02C;">
+                <thead style="background:#fff; color:#1BB02C;">
                     <tr>
                         <?php
                         $visibleCols = array_filter(array_keys($products[0] ?? []), function ($col) {
