@@ -46,7 +46,7 @@ h1 {
 /* Stats Grid */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     /* 2 columns */
     gap: 20px;
     margin-top: 20px;
@@ -75,4 +75,55 @@ h1 {
     font-size: 20px;
     font-weight: bold;
     color: #1BB02C;
+}
+
+/* Tables Row for Recent Payments & Sales */
+.tables-row {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    justify-content: space-between;
+}
+
+.table-container {
+    flex: 1;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    padding: 18px 16px 24px 16px;
+    min-width: 0;
+}
+
+.table-container h2 {
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: #1BB02C;
+}
+
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    background: #fff;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.dashboard-table th {
+    background: #f4f6f9;
+    color: #333;
+    font-weight: 600;
+}
+
+.dashboard-table tr:last-child td {
+    border-bottom: none;
+}
+
+.dashboard-table td {
+    color: #444;
 }

@@ -134,4 +134,21 @@ class PaymentsHandler
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    // Total payments (all time)
+    public function getTotalPayments()
+    {
+        $stmt = $this->conn->prepare("SELECT SUM(amount) AS total_payments FROM payments");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total_payments'] ?? 0;
+    }
+
+    // Today's payments
+    public function getTodayPayments()
+    {
+        $stmt = $this->conn->prepare("SELECT SUM(amount) AS total_payments FROM payments WHERE DATE(payment_date) = CURDATE()");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total_payments'] ?? 0;
+    }
 }
