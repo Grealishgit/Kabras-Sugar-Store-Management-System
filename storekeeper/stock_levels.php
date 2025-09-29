@@ -103,6 +103,56 @@ $products = $productHandler->getProductsStock(10); // low stock threshold = 10
             </div>
         </div>
 
+        <!-- Filter/Search Form -->
+        <form method="get" class="filter-form"
+            style="margin-bottom:24px; display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+            <input type="text" name="name" placeholder="Product Name"
+                value="<?php echo isset($_GET['name']) ? htmlspecialchars($_GET['name']) : ''; ?>" />
+            <input type="text" name="category" placeholder="Category"
+                value="<?php echo isset($_GET['category']) ? htmlspecialchars($_GET['category']) : ''; ?>" />
+            <select name="status">
+                <option value="">All Status</option>
+                <option value="active"
+                    <?php if (isset($_GET['status']) && $_GET['status'] === 'active') echo 'selected'; ?>>Active</option>
+                <option value="inactive"
+                    <?php if (isset($_GET['status']) && $_GET['status'] === 'inactive') echo 'selected'; ?>>Inactive
+                </option>
+            </select>
+            <select name="low_stock">
+                <option value="">Low Stock?</option>
+                <option value="yes"
+                    <?php if (isset($_GET['low_stock']) && $_GET['low_stock'] === 'yes') echo 'selected'; ?>>Yes</option>
+                <option value="no" <?php if (isset($_GET['low_stock']) && $_GET['low_stock'] === 'no') echo 'selected'; ?>>
+                    No</option>
+            </select>
+            <button type="submit" class="btn">Filter</button>
+            <a href="stock_levels.php" class="btn" style="background:#eee; color:#333;">Reset</a>
+        </form>
+
+        <?php
+        // Filter logic
+        $filteredProducts = $products;
+        if (!empty($_GET['name'])) {
+            $filteredProducts = array_filter($filteredProducts, function ($p) {
+                return stripos($p['name'], $_GET['name']) !== false;
+            });
+        }
+        if (!empty($_GET['category'])) {
+            $filteredProducts = array_filter($filteredProducts, function ($p) {
+                return stripos($p['category'], $_GET['category']) !== false;
+            });
+        }
+        if (isset($_GET['status']) && $_GET['status'] !== '') {
+            $filteredProducts = array_filter($filteredProducts, function ($p) {
+                return strtolower($p['status']) === strtolower($_GET['status']);
+            });
+        }
+        if (isset($_GET['low_stock']) && $_GET['low_stock'] !== '') {
+            $filteredProducts = array_filter($filteredProducts, function ($p) {
+                return ($_GET['low_stock'] === 'yes') ? $p['low_stock'] : !$p['low_stock'];
+            });
+        }
+        ?>
         <table>
             <thead>
                 <tr>
@@ -115,7 +165,7 @@ $products = $productHandler->getProductsStock(10); // low stock threshold = 10
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($products as $product): ?>
+                <?php foreach ($filteredProducts as $product): ?>
                     <tr class="<?php echo $product['low_stock'] ? 'low-stock' : ''; ?>">
                         <td><?php echo htmlspecialchars($product['name']); ?></td>
                         <td><?php echo htmlspecialchars($product['category']); ?></td>
