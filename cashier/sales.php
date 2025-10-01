@@ -2,9 +2,11 @@
 session_start();
 require_once '../handlers/AuthHandler.php';
 require_once '../handlers/SalesHandler.php';
+require_once '../handlers/CustomerHandler.php';
 
 $authHandler = new AuthHandler();
 $salesHandler = new SalesHandler();
+$customerHandler = new CustomerHandler();
 
 // Ensure user is logged in
 if (!$authHandler->isLoggedIn()) {
@@ -22,6 +24,9 @@ if ($currentUser['role'] !== 'Cashier') {
 
 // Get all products
 $products = $salesHandler->getProducts();
+
+// Get all customers for dropdown
+$customers = $customerHandler->getAllCustomers();
 
 // Get sales statistics
 $todaySales = $salesHandler->getTodaySales($currentUser['id']);
@@ -90,17 +95,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['process_sale'])) {
 
         <!-- Success/Error Messages -->
         <?php if (isset($_GET['success'])): ?>
-            <div class="alert alert-success">
-                <i class="fas fa-check-circle"></i>
-                <?= htmlspecialchars($_GET['success']); ?>
-            </div>
+        <div class="alert alert-success">
+            <i class="fas fa-check-circle"></i>
+            <?= htmlspecialchars($_GET['success']); ?>
+        </div>
         <?php endif; ?>
 
         <?php if (isset($_GET['error'])): ?>
-            <div class="alert alert-error">
-                <i class="fas fa-exclamation-triangle"></i>
-                <?= htmlspecialchars($_GET['error']); ?>
-            </div>
+        <div class="alert alert-error">
+            <i class="fas fa-exclamation-triangle"></i>
+            <?= htmlspecialchars($_GET['error']); ?>
+        </div>
         <?php endif; ?>
 
         <!-- Sales Statistics Dashboard -->
@@ -278,28 +283,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['process_sale'])) {
                         </label>
                         <select name="customer_id" id="customer_id">
                             <option value="">Walk-in Customer</option>
-                            <!-- Add customers here if you have a customers table -->
+                            <?php foreach ($customers as $customer): ?>
+                            <option value="<?= $customer['id'] ?>">
+                                <?= htmlspecialchars($customer['name']) ?>
+                                <?php if ($customer['phone']): ?>
+                                - <?= htmlspecialchars($customer['phone']) ?>
+                                <?php endif; ?>
+                            </option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
 
                     <!-- Products Grid -->
                     <div class="products-grid">
                         <?php foreach ($products as $product): ?>
-                            <div class="product-card" data-product-name="<?= strtolower($product['name']); ?>">
-                                <div class="product-info">
-                                    <h3><?= htmlspecialchars($product['name']); ?></h3>
-                                    <p class="product-price">Ksh <?= number_format($product['price'], 2); ?></p>
-                                </div>
-                                <div class="quantity-controls">
-                                    <button type="button" class="qty-btn minus"
-                                        data-product="<?= $product['id']; ?>">-</button>
-                                    <input type="number" name="items[<?= $product['id']; ?>]" value="0" min="0"
-                                        class="qty-input" data-price="<?= $product['price']; ?>"
-                                        data-product="<?= $product['id']; ?>">
-                                    <button type="button" class="qty-btn plus"
-                                        data-product="<?= $product['id']; ?>">+</button>
-                                </div>
+                        <div class="product-card" data-product-name="<?= strtolower($product['name']); ?>">
+                            <div class="product-info">
+                                <h3><?= htmlspecialchars($product['name']); ?></h3>
+                                <p class="product-price">Ksh <?= number_format($product['price'], 2); ?></p>
                             </div>
+                            <div class="quantity-controls">
+                                <button type="button" class="qty-btn minus"
+                                    data-product="<?= $product['id']; ?>">-</button>
+                                <input type="number" name="items[<?= $product['id']; ?>]" value="0" min="0"
+                                    class="qty-input" data-price="<?= $product['price']; ?>"
+                                    data-product="<?= $product['id']; ?>">
+                                <button type="button" class="qty-btn plus"
+                                    data-product="<?= $product['id']; ?>">+</button>
+                            </div>
+                        </div>
                         <?php endforeach; ?>
                     </div>
 
@@ -359,24 +371,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['process_sale'])) {
                             if (!empty($allSales)):
                                 $rowNum = 1;
                                 foreach ($allSales as $sale): ?>
-                                    <tr>
-                                        <td><?= $rowNum++; ?></td>
-                                        <td><?= date('Y-m-d H:i', strtotime($sale['sale_date'])); ?></td>
-                                        <td><?= $sale['id']; ?></td>
-                                        <td><?= $sale['customer_id'] ?? '-'; ?></td>
-                                        <td><?= $sale['user_id']; ?></td>
-                                        <td><?= number_format($sale['total_amount'], 2); ?></td>
-                                        <td><?= $sale['quantity']; ?></td>
-                                        <td><?= number_format($sale['unit_price'], 2); ?></td>
-                                        <td>
-                                            <button class="btn btn-info btn-sm">View</button>
-                                        </td>
-                                    </tr>
-                                <?php endforeach;
+                            <tr>
+                                <td><?= $rowNum++; ?></td>
+                                <td><?= date('Y-m-d H:i', strtotime($sale['sale_date'])); ?></td>
+                                <td><?= $sale['id']; ?></td>
+                                <td><?= $sale['customer_id'] ?? '-'; ?></td>
+                                <td><?= $sale['user_id']; ?></td>
+                                <td><?= number_format($sale['total_amount'], 2); ?></td>
+                                <td><?= $sale['quantity']; ?></td>
+                                <td><?= number_format($sale['unit_price'], 2); ?></td>
+                                <td>
+                                    <button class="btn btn-info btn-sm">View</button>
+                                </td>
+                            </tr>
+                            <?php endforeach;
                             else: ?>
-                                <tr>
-                                    <td colspan="8" class="no-sales">No sales found</td>
-                                </tr>
+                            <tr>
+                                <td colspan="8" class="no-sales">No sales found</td>
+                            </tr>
                             <?php endif; ?>
                         </tbody>
                     </table>
