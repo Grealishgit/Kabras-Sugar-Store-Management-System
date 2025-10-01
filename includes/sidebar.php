@@ -13,10 +13,10 @@ $menu = [
     'Admin' => [
         ['label' => 'User Management', 'href' => '/admin/users.php', 'icon' => 'fas fa-users'],
         ['label' => 'Assign Roles', 'href' => '/admin/roles.php', 'icon' => 'fas fa-user-cog'],
-        ['label' => 'System Backup', 'href' => '/admin/backup.php', 'icon' => 'fas fa-server'],
         // ['label' => 'Audit Logs', 'href' => '/admin/audit_logs.php', 'icon' => 'fas fa-file-alt'],
         ['label' => 'Audit Reports', 'href' => '/admin/audits.php', 'icon' => 'fas fa-clipboard-check'],
         ['label' => 'Compliance', 'href' => '/admin/compliance.php', 'icon' => 'fas fa-shield-alt'],
+        ['label' => 'System Backup', 'href' => '/admin/backup.php', 'icon' => 'fas fa-server'],
     ],
     'StoreKeeper' => [
         ['label' => 'Stock Entry', 'href' => 'stock_entry.php', 'icon' => 'fas fa-box-open'],

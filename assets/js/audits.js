@@ -338,3 +338,237 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// COMPLIANCE AUDIT FUNCTIONS
+
+// Global variables for compliance audits
+let currentComplianceEditId = null;
+let isComplianceEditMode = false;
+
+// Open add compliance modal
+function openAddComplianceModal() {
+    isComplianceEditMode = false;
+    currentComplianceEditId = null;
+    document.getElementById('complianceModalTitle').textContent = 'Add New Compliance Audit';
+    document.getElementById('complianceAuditForm').reset();
+    document.getElementById('complianceAuditId').value = '';
+
+    // Set today's date as default
+    const complianceAuditDateInput = document.getElementById('compliance_audit_date');
+    if (complianceAuditDateInput) {
+        complianceAuditDateInput.valueAsDate = new Date();
+    }
+
+    document.getElementById('complianceAuditModal').style.display = 'block';
+}
+
+// Close compliance modal
+function closeComplianceModal() {
+    document.getElementById('complianceAuditModal').style.display = 'none';
+    isComplianceEditMode = false;
+    currentComplianceEditId = null;
+}
+
+// Close view compliance modal
+function closeViewComplianceModal() {
+    document.getElementById('viewComplianceModal').style.display = 'none';
+}
+
+// Handle compliance audit form submission
+async function handleComplianceFormSubmit(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const action = isComplianceEditMode ? 'update_compliance' : 'create_compliance';
+    formData.append('action', action);
+
+    if (isComplianceEditMode && currentComplianceEditId) {
+        formData.append('id', currentComplianceEditId);
+    }
+
+    try {
+        const response = await fetch('audits.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showNotification(
+                isComplianceEditMode ? 'Compliance audit updated successfully!' : 'Compliance audit created successfully!',
+                'success'
+            );
+            closeComplianceModal();
+            // Reload the page to show updated data
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        } else {
+            showNotification('Error saving compliance audit. Please try again.', 'error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showNotification('Error saving compliance audit. Please try again.', 'error');
+    }
+}
+
+// View compliance audit details
+async function viewComplianceAudit(id) {
+    try {
+        const formData = new FormData();
+        formData.append('action', 'get_compliance');
+        formData.append('id', id);
+
+        const response = await fetch('audits.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const complianceAudit = await response.json();
+
+        if (complianceAudit) {
+            const viewContent = document.getElementById('viewComplianceContent');
+            viewContent.innerHTML = `
+                <div class="detail-row">
+                    <div class="detail-label">Compliance Audit ID:</div>
+                    <div class="detail-value">#${complianceAudit.id}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Date:</div>
+                    <div class="detail-value">${formatDate(complianceAudit.audit_date)}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Type:</div>
+                    <div class="detail-value"><span class="type-badge type-${complianceAudit.audit_type.toLowerCase()}">${complianceAudit.audit_type}</span></div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Conducted By:</div>
+                    <div class="detail-value">${complianceAudit.conducted_by_name}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Status:</div>
+                    <div class="detail-value"><span class="status-badge status-${complianceAudit.status.toLowerCase()}">${complianceAudit.status}</span></div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Comments:</div>
+                    <div class="detail-value">${complianceAudit.comments || 'No comments'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Created:</div>
+                    <div class="detail-value">${formatDateTime(complianceAudit.created_at)}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Last Updated:</div>
+                    <div class="detail-value">${formatDateTime(complianceAudit.updated_at)}</div>
+                </div>
+            `;
+
+            document.getElementById('viewComplianceModal').style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showNotification('Error loading compliance audit details.', 'error');
+    }
+}
+
+// Edit compliance audit
+async function editComplianceAudit(id) {
+    try {
+        const formData = new FormData();
+        formData.append('action', 'get_compliance');
+        formData.append('id', id);
+
+        const response = await fetch('audits.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const complianceAudit = await response.json();
+
+        if (complianceAudit) {
+            isComplianceEditMode = true;
+            currentComplianceEditId = id;
+
+            document.getElementById('complianceModalTitle').textContent = 'Edit Compliance Audit';
+            document.getElementById('complianceAuditId').value = complianceAudit.id;
+            document.getElementById('compliance_audit_date').value = complianceAudit.audit_date.split(' ')[0]; // Get date part only
+            document.getElementById('compliance_audit_type').value = complianceAudit.audit_type;
+            document.getElementById('compliance_conducted_by').value = complianceAudit.conducted_by;
+            document.getElementById('compliance_status').value = complianceAudit.status;
+            document.getElementById('compliance_comments').value = complianceAudit.comments || '';
+
+            document.getElementById('complianceAuditModal').style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showNotification('Error loading compliance audit details.', 'error');
+    }
+}
+
+// Delete compliance audit
+async function deleteComplianceAudit(id) {
+    if (!confirm('Are you sure you want to delete this compliance audit? This action cannot be undone.')) {
+        return;
+    }
+
+    try {
+        const formData = new FormData();
+        formData.append('action', 'delete_compliance');
+        formData.append('id', id);
+
+        const response = await fetch('audits.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showNotification('Compliance audit deleted successfully!', 'success');
+            // Reload the page to show updated data
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        } else {
+            showNotification('Error deleting compliance audit. Please try again.', 'error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showNotification('Error deleting compliance audit. Please try again.', 'error');
+    }
+}
+
+// Format date-time helper
+function formatDateTime(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+// Add event listeners for compliance audit forms
+document.addEventListener('DOMContentLoaded', function () {
+    // Initialize compliance audit form submission
+    const complianceAuditForm = document.getElementById('complianceAuditForm');
+    if (complianceAuditForm) {
+        complianceAuditForm.addEventListener('submit', handleComplianceFormSubmit);
+    }
+
+    // Close modals when clicking outside
+    window.addEventListener('click', function (event) {
+        const complianceModal = document.getElementById('complianceAuditModal');
+        const viewComplianceModal = document.getElementById('viewComplianceModal');
+
+        if (event.target === complianceModal) {
+            closeComplianceModal();
+        }
+        if (event.target === viewComplianceModal) {
+            closeViewComplianceModal();
+        }
+    });
+});

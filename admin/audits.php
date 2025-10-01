@@ -67,6 +67,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $audit = $auditHandler->getAuditReportById($id);
             echo json_encode($audit);
             exit();
+
+        // Compliance Audit actions
+        case 'create_compliance':
+            $data = [
+                'audit_date' => $_POST['audit_date'],
+                'audit_type' => $_POST['audit_type'],
+                'conducted_by' => $_POST['conducted_by'],
+                'status' => $_POST['status'],
+                'comments' => $_POST['comments'] ?? ''
+            ];
+
+            $result = $auditHandler->createComplianceAudit($data);
+            echo json_encode(['success' => $result]);
+            exit();
+
+        case 'update_compliance':
+            $id = $_POST['id'];
+            $data = [
+                'audit_date' => $_POST['audit_date'],
+                'audit_type' => $_POST['audit_type'],
+                'conducted_by' => $_POST['conducted_by'],
+                'status' => $_POST['status'],
+                'comments' => $_POST['comments'] ?? ''
+            ];
+
+            $result = $auditHandler->updateComplianceAudit($id, $data);
+            echo json_encode(['success' => $result]);
+            exit();
+
+        case 'delete_compliance':
+            $id = $_POST['id'];
+            $result = $auditHandler->deleteComplianceAudit($id);
+            echo json_encode(['success' => $result]);
+            exit();
+
+        case 'get_compliance':
+            $id = $_POST['id'];
+            $complianceAudit = $auditHandler->getComplianceAuditById($id);
+            echo json_encode($complianceAudit);
+            exit();
     }
 }
 
@@ -90,6 +130,9 @@ $limit = 10;
 $audits = $auditHandler->getAuditReports($page, $limit, $filters);
 $totalAudits = $auditHandler->getAuditReportsCount($filters);
 $totalPages = ceil($totalAudits / $limit);
+
+// Get compliance audits
+$complianceAudits = $auditHandler->getComplianceAudits($page, $limit, $filters);
 
 // Get all users for dropdowns
 $users = $auditHandler->getAllUsers();
@@ -158,6 +201,46 @@ $stats = $auditHandler->getAuditStatistics();
                     <div class="stat-info">
                         <h3><?= $stats['audit_reports']['pending_audits'] ?? 0 ?></h3>
                         <p>Pending Audits</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compliance Audits Statistics -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shield-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3><?= $stats['compliance_audits']['total_compliance_audits'] ?? 0 ?></h3>
+                        <p>Total Compliance Audits</p>
+                    </div>
+                </div>
+                <div class="stat-card passed">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-shield"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3><?= $stats['compliance_audits']['passed_compliance'] ?? 0 ?></h3>
+                        <p>Passed Compliance</p>
+                    </div>
+                </div>
+                <div class="stat-card failed">
+                    <div class="stat-icon">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3><?= $stats['compliance_audits']['failed_compliance'] ?? 0 ?></h3>
+                        <p>Failed Compliance</p>
+                    </div>
+                </div>
+                <div class="stat-card pending">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3><?= $stats['compliance_audits']['pending_compliance'] ?? 0 ?></h3>
+                        <p>Pending Compliance</p>
                     </div>
                 </div>
             </div>
@@ -256,6 +339,62 @@ $stats = $auditHandler->getAuditStatistics();
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
+
+            <!-- Compliance Audits Table -->
+            <div class="table-container" style="margin-top: 32px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="margin: 0; color: #1BB02C; display: flex; align-items: center; gap: 12px;">
+                        <i class="fas fa-shield-check"></i> Compliance Audits
+                    </h2>
+                    <button class="btn btn-primary" onclick="openAddComplianceModal()">
+                        <i class="fas fa-plus"></i> Add Compliance Audit
+                    </button>
+                </div>
+                <table class="audits-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Conducted By</th>
+                            <th>Status</th>
+                            <th>Comments</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($complianceAudits)): ?>
+                            <tr>
+                                <td colspan="7" class="no-data">No compliance audits found</td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($complianceAudits as $complianceAudit): ?>
+                                <tr>
+                                    <td>#<?= $complianceAudit['id'] ?></td>
+                                    <td><?= date('M j, Y', strtotime($complianceAudit['audit_date'])) ?></td>
+                                    <td><span class="type-badge type-<?= strtolower($complianceAudit['audit_type']) ?>"><?= $complianceAudit['audit_type'] ?></span></td>
+                                    <td><?= htmlspecialchars($complianceAudit['conducted_by_name']) ?></td>
+                                    <td><span class="status-badge status-<?= strtolower($complianceAudit['status']) ?>"><?= $complianceAudit['status'] ?></span></td>
+                                    <td class="description-cell" title="<?= htmlspecialchars($complianceAudit['comments'] ?? '') ?>">
+                                        <?= $complianceAudit['comments'] ? (strlen($complianceAudit['comments']) > 50 ? substr(htmlspecialchars($complianceAudit['comments']), 0, 50) . '...' : htmlspecialchars($complianceAudit['comments'])) : 'N/A' ?>
+                                    </td>
+                                    <td class="actions">
+                                        <button onclick="viewComplianceAudit(<?= $complianceAudit['id'] ?>)" class="btn-action btn-view" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button onclick="editComplianceAudit(<?= $complianceAudit['id'] ?>)" class="btn-action btn-edit" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteComplianceAudit(<?= $complianceAudit['id'] ?>)" class="btn-action btn-delete" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
 
@@ -343,6 +482,84 @@ $stats = $auditHandler->getAuditStatistics();
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closeViewModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compliance Audit Modal -->
+    <div id="complianceAuditModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="complianceModalTitle">Add New Compliance Audit</h2>
+                <span class="close" onclick="closeComplianceModal()">&times;</span>
+            </div>
+
+            <form id="complianceAuditForm">
+                <input type="hidden" id="complianceAuditId" name="id">
+
+                <div class="form-group">
+                    <label for="compliance_audit_date">Audit Date *</label>
+                    <input type="date" id="compliance_audit_date" name="audit_date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="compliance_audit_type">Audit Type *</label>
+                    <select id="compliance_audit_type" name="audit_type" required>
+                        <option value="">Select Type</option>
+                        <option value="Financial">Financial</option>
+                        <option value="Stock">Stock</option>
+                        <option value="Safety">Safety</option>
+                        <option value="Regulatory">Regulatory</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="compliance_conducted_by">Conducted By *</label>
+                    <select id="compliance_conducted_by" name="conducted_by" required>
+                        <option value="">Select User</option>
+                        <?php foreach ($users as $user): ?>
+                            <option value="<?= $user['id'] ?>"><?= htmlspecialchars($user['name']) ?> (<?= $user['role'] ?>)</option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="compliance_status">Status *</label>
+                    <select id="compliance_status" name="status" required>
+                        <option value="">Select Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Passed">Passed</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="compliance_comments">Comments</label>
+                    <textarea id="compliance_comments" name="comments" rows="4" placeholder="Enter compliance audit comments..."></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeComplianceModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Compliance Audit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- View Compliance Audit Modal -->
+    <div id="viewComplianceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>View Compliance Audit</h2>
+                <span class="close" onclick="closeViewComplianceModal()">&times;</span>
+            </div>
+
+            <div id="viewComplianceContent" class="view-content">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeViewComplianceModal()">Close</button>
             </div>
         </div>
     </div>

@@ -283,6 +283,16 @@ class AuditHandler
         ]);
     }
 
+    /**
+     * Delete a compliance audit
+     */
+    public function deleteComplianceAudit($id)
+    {
+        $sql = "DELETE FROM compliance_audits WHERE id = ?";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([$id]);
+    }
+
     // COMPLIANCE VIOLATIONS METHODS
 
     /**
