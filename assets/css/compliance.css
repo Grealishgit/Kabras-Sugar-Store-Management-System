@@ -542,3 +542,107 @@
     border-top: 1px solid #dee2e6;
     margin-top: 20px;
 }
+
+/* View Modal Styling */
+.view-content {
+    padding: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    align-items: flex-start;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #333;
+    min-width: 140px;
+    flex-shrink: 0;
+    margin-right: 16px;
+    font-size: 14px;
+}
+
+.detail-value {
+    flex: 1;
+    color: #555;
+    line-height: 1.5;
+    word-wrap: break-word;
+    font-size: 14px;
+}
+
+.detail-value .category-badge,
+.detail-value .severity-badge,
+.detail-value .status-badge {
+    display: inline-block;
+    margin: 0;
+}
+
+.modal-footer {
+    padding: 16px 20px;
+    border-top: 1px solid #dee2e6;
+    background: #f8f9fa;
+    border-radius: 0 0 8px 8px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+/* Enhanced modal content for better readability */
+.view-content .detail-row:nth-child(even) {
+    background: #f9f9f9;
+    padding: 12px 16px;
+    margin: 0 -16px 16px -16px;
+    border-radius: 6px;
+    border-bottom: none;
+}
+
+.view-content .detail-row:nth-child(odd) {
+    padding: 12px 16px;
+    margin: 0 -16px 16px -16px;
+}
+
+/* Improved spacing for description and notes */
+.detail-value {
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+
+/* Better modal width for view modal */
+#viewModal .modal-content {
+    max-width: 700px;
+}
+
+/* Responsive design for view modal */
+@media (max-width: 768px) {
+    .detail-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .detail-label {
+        min-width: auto;
+        margin-right: 0;
+        margin-bottom: 4px;
+        font-weight: 700;
+    }
+
+    #viewModal .modal-content {
+        width: 95%;
+        margin: 2% auto;
+    }
+
+    .view-content {
+        padding: 16px;
+        max-height: 70vh;
+    }
+}
