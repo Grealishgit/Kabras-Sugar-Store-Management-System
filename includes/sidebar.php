@@ -24,6 +24,7 @@ $menu = [
         ['label' => 'Sales', 'href' => 'sales.php', 'icon' => 'fas fa-cash-register'],
         ['label' => 'Receipts', 'href' => 'receipts.php', 'icon' => 'fas fa-receipt'],
         ['label' => 'Payments', 'href' => 'payments.php', 'icon' => 'fas fa-credit-card'],
+        ['label' => 'Customers', 'href' => 'customers.php', 'icon' => 'fas fa-user-friends'],
     ],
     'Manager' => [
         ['label' => 'Sales Reports', 'href' => 'reports.php', 'icon' => 'fas fa-chart-line'],
@@ -61,13 +62,13 @@ if (isset($menu[$role])) {
         <nav class="sidebar-nav">
             <ul>
                 <?php foreach ($items as $it): ?>
-                    <li>
-                        <a href="<?= htmlspecialchars($it['href']) ?>"
-                            class="<?= (basename($_SERVER['PHP_SELF']) === basename($it['href'])) ? 'active' : '' ?>">
-                            <i class="<?= htmlspecialchars($it['icon']) ?>" aria-hidden="true"></i>
-                            <span class="label"><?= htmlspecialchars($it['label']) ?></span>
-                        </a>
-                    </li>
+                <li>
+                    <a href="<?= htmlspecialchars($it['href']) ?>"
+                        class="<?= (basename($_SERVER['PHP_SELF']) === basename($it['href'])) ? 'active' : '' ?>">
+                        <i class="<?= htmlspecialchars($it['icon']) ?>" aria-hidden="true"></i>
+                        <span class="label"><?= htmlspecialchars($it['label']) ?></span>
+                    </a>
+                </li>
                 <?php endforeach; ?>
             </ul>
         </nav>
@@ -126,13 +127,13 @@ if (isset($menu[$role])) {
 </div>
 
 <script>
-    function showLogoutModal() {
-        document.getElementById('logoutModal').style.display = 'flex';
-    }
+function showLogoutModal() {
+    document.getElementById('logoutModal').style.display = 'flex';
+}
 
-    function hideLogoutModal() {
-        document.getElementById('logoutModal').style.display = 'none';
-    }
+function hideLogoutModal() {
+    document.getElementById('logoutModal').style.display = 'none';
+}
 </script>
 
 <?php
