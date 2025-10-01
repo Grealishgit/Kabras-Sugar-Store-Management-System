@@ -113,18 +113,65 @@ $totalUsers = count($users);
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Last Login</th>
+                                <th>Time</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $recent = array_slice(array_filter($users, fn($u) => !empty($u['last_login'])), -5);
                             foreach (array_reverse($recent) as $u): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($u['name']); ?></td>
-                                    <td><?= htmlspecialchars($u['email']); ?></td>
-                                    <td><span class="role-badge role-<?= strtolower($u['role']) ?>"><?= htmlspecialchars($u['role']); ?></span></td>
-                                    <td><?= date('M j, Y g:i A', strtotime($u['last_login'])); ?></td>
-                                </tr>
+                            <tr>
+                                <td><?= htmlspecialchars($u['name']); ?></td>
+                                <td><?= htmlspecialchars($u['email']); ?></td>
+                                <td><span
+                                        class="role-badge role-<?= strtolower($u['role']) ?>"><?= htmlspecialchars($u['role']); ?></span>
+                                </td>
+                                <td><?= date('M j, Y g:i A', strtotime($u['last_login'])); ?></td>
+                                <td><?php
+                                        if ($u['last_login']) {
+                                            date_default_timezone_set('Africa/Nairobi');
+
+                                            // Current date and time
+                                            $currentDateTime = new DateTime('now', new DateTimeZone('Africa/Nairobi'));
+
+                                            // Last login date and time
+                                            $lastLoginDateTime = new DateTime($u['last_login'], new DateTimeZone('Africa/Nairobi'));
+
+                                            // Calculate difference
+                                            $interval = $currentDateTime->diff($lastLoginDateTime);
+
+                                            if ($interval->days > 0) {
+                                                if ($interval->days == 1) {
+                                                    echo '1 day ago';
+                                                } else {
+                                                    echo $interval->days . ' days ago';
+                                                }
+                                            } elseif ($interval->h > 0) {
+                                                if ($interval->h == 1) {
+                                                    echo '1 hr ago';
+                                                } else {
+                                                    echo $interval->h . ' hrs ago';
+                                                }
+                                            } elseif ($interval->i > 0) {
+                                                if ($interval->i == 1) {
+                                                    echo '1 min ago';
+                                                } else {
+                                                    echo $interval->i . ' mins ago';
+                                                }
+                                            } else {
+                                                $seconds = max(1, $interval->s);
+                                                if ($seconds == 1) {
+                                                    echo '1 sec ago';
+                                                } else {
+                                                    echo $seconds . ' secs ago';
+                                                }
+                                            }
+                                        } else {
+                                            echo 'N/A';
+                                        }
+                                        ?>
+                                </td>
+                            </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
@@ -184,47 +231,47 @@ $totalUsers = count($users);
 
     <!-- Chart -->
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const ctx = document.getElementById('roleChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: ['Admin', 'Manager', 'Cashier', 'Accountant', 'StoreKeeper'],
-                    datasets: [{
-                        data: [<?= $roleCounts['Admin']; ?>, <?= $roleCounts['Manager']; ?>,
-                            <?= $roleCounts['Cashier']; ?>, <?= $roleCounts['Accountant']; ?>,
-                            <?= $roleCounts['StoreKeeper']; ?>
-                        ],
-                        backgroundColor: ['#1BB02C', '#3498db', '#f39c12', '#e67e22', '#8e44ad'],
-                    }]
-                },
-                options: {
-                    responsive: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
-                        }
+    document.addEventListener("DOMContentLoaded", function() {
+        const ctx = document.getElementById('roleChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Admin', 'Manager', 'Cashier', 'Accountant', 'StoreKeeper'],
+                datasets: [{
+                    data: [<?= $roleCounts['Admin']; ?>, <?= $roleCounts['Manager']; ?>,
+                        <?= $roleCounts['Cashier']; ?>, <?= $roleCounts['Accountant']; ?>,
+                        <?= $roleCounts['StoreKeeper']; ?>
+                    ],
+                    backgroundColor: ['#1BB02C', '#3498db', '#f39c12', '#e67e22', '#8e44ad'],
+                }]
+            },
+            options: {
+                responsive: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
                     }
                 }
-            });
-
-            // Simple Calendar
-            const calendar = document.getElementById("calendar");
-            const date = new Date();
-            const month = date.toLocaleString('default', {
-                month: 'long'
-            });
-            const year = date.getFullYear();
-            const days = new Date(year, date.getMonth() + 1, 0).getDate();
-
-            let html = `<div class="calendar-header">${month} ${year}</div><div class="calendar-grid">`;
-            for (let i = 1; i <= days; i++) {
-                let today = (i === date.getDate()) ? "today" : "";
-                html += `<div class="calendar-day ${today}">${i}</div>`;
             }
-            html += "</div>";
-            calendar.innerHTML = html;
         });
+
+        // Simple Calendar
+        const calendar = document.getElementById("calendar");
+        const date = new Date();
+        const month = date.toLocaleString('default', {
+            month: 'long'
+        });
+        const year = date.getFullYear();
+        const days = new Date(year, date.getMonth() + 1, 0).getDate();
+
+        let html = `<div class="calendar-header">${month} ${year}</div><div class="calendar-grid">`;
+        for (let i = 1; i <= days; i++) {
+            let today = (i === date.getDate()) ? "today" : "";
+            html += `<div class="calendar-day ${today}">${i}</div>`;
+        }
+        html += "</div>";
+        calendar.innerHTML = html;
+    });
     </script>
 </body>
 
