@@ -1,4 +1,19 @@
 <?php
+require_once '../handlers/AuthHandler.php';
+require_once '../handlers/PaymentsHandler.php';
+require_once '../handlers/SalesHandler.php';
+require_once '../handlers/FinanceHandler.php';
+require_once '../config/database.php';
+
+// Handle logout request
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout']) && $_POST['logout'] == '1') {
+    session_start();
+    session_unset();
+    session_destroy();
+    header('Location: ../login.php');
+    exit();
+}
+
 // Format large amounts as 10K, 100K, etc.
 function formatShortAmount($amount)
 {
@@ -13,13 +28,6 @@ function formatShortAmount($amount)
         return number_format($amount, 2);
     }
 }
-
-
-require_once '../handlers/AuthHandler.php';
-require_once '../handlers/PaymentsHandler.php';
-require_once '../handlers/SalesHandler.php';
-require_once '../handlers/FinanceHandler.php';
-require_once '../config/database.php';
 
 
 // Handle add expense form submission (from modal)
@@ -327,17 +335,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['export_expenses_csv']
                     </thead>
                     <tbody>
                         <?php foreach ($recentPayments as $p): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($p['date'] ?? $p['payment_date']) ?></td>
-                                <td><?= htmlspecialchars($p['customer'] ?? 'N/A') ?></td>
-                                <td>Ksh <?= number_format($p['amount'] ?? 0, 2) ?></td>
-                                <td><?= htmlspecialchars($p['method'] ?? 'N/A') ?></td>
-                                <td><?= htmlspecialchars($p['recorded_by_name']) ?></td>
-                            </tr>
+                        <tr>
+                            <td><?= htmlspecialchars($p['date'] ?? $p['payment_date']) ?></td>
+                            <td><?= htmlspecialchars($p['customer'] ?? 'N/A') ?></td>
+                            <td>Ksh <?= number_format($p['amount'] ?? 0, 2) ?></td>
+                            <td><?= htmlspecialchars($p['method'] ?? 'N/A') ?></td>
+                            <td><?= htmlspecialchars($p['recorded_by_name']) ?></td>
+                        </tr>
                         <?php endforeach; ?>
                         <?php if (empty($recentPayments)): ?><tr>
-                                <td colspan="5">No payments found.</td>
-                            </tr><?php endif; ?>
+                            <td colspan="5">No payments found.</td>
+                        </tr><?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -360,36 +368,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['export_expenses_csv']
                     </thead>
                     <tbody>
                         <?php foreach ($expenses as $e): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($e['date']) ?></td>
-                                <td><?= htmlspecialchars($e['vendor']) ?></td>
-                                <td>Ksh <?= number_format($e['amount'], 2) ?></td>
-                                <td><?= htmlspecialchars($e['category']) ?></td>
-                                <td><?= htmlspecialchars($e['recorded_by_name']) ?></td>
-                            </tr>
+                        <tr>
+                            <td><?= htmlspecialchars($e['date']) ?></td>
+                            <td><?= htmlspecialchars($e['vendor']) ?></td>
+                            <td>Ksh <?= number_format($e['amount'], 2) ?></td>
+                            <td><?= htmlspecialchars($e['category']) ?></td>
+                            <td><?= htmlspecialchars($e['recorded_by_name']) ?></td>
+                        </tr>
                         <?php endforeach; ?>
                         <?php if (empty($expenses)): ?><tr>
-                                <td colspan="5">No expenses found.</td>
-                            </tr><?php endif; ?>
+                            <td colspan="5">No expenses found.</td>
+                        </tr><?php endif; ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
     <script>
-        // Modal open/close logic
-        document.getElementById('openExpenseModalBtn').onclick = function() {
-            document.getElementById('addExpenseModal').style.display = 'flex';
-        };
-        document.getElementById('closeExpenseModalBtn').onclick = function() {
-            document.getElementById('addExpenseModal').style.display = 'none';
-        };
-        window.onclick = function(event) {
-            var modal = document.getElementById('addExpenseModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        };
+    // Modal open/close logic
+    document.getElementById('openExpenseModalBtn').onclick = function() {
+        document.getElementById('addExpenseModal').style.display = 'flex';
+    };
+    document.getElementById('closeExpenseModalBtn').onclick = function() {
+        document.getElementById('addExpenseModal').style.display = 'none';
+    };
+    window.onclick = function(event) {
+        var modal = document.getElementById('addExpenseModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
     </script>
 </body>
 
