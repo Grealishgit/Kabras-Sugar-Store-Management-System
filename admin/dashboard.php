@@ -7,9 +7,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout']) && $_POST['
     exit();
 }
 require_once '../handlers/AuthHandler.php';
+require_once '../handlers/AuditHandler.php';
 require_once '../app/models/User.php';
 
 $authHandler = new AuthHandler();
+$auditHandler = new AuditHandler();
 $userHandler = new User();
 
 // Ensure user is logged in
@@ -45,6 +47,9 @@ foreach ($users as $user) {
 }
 
 $totalUsers = count($users);
+
+// Get audit and compliance statistics
+$auditStats = $auditHandler->getAuditStatistics();
 ?>
 
 <!DOCTYPE html>
@@ -67,33 +72,98 @@ $totalUsers = count($users);
             <p class="subtitle">System Overview</p>
 
             <!-- Stat Cards -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>Total Users</h3>
-                    <p><?= $totalUsers; ?></p>
+            <div class="dashboard-stats-container">
+                <!-- User Stats Grid (Left) -->
+
+                <div class="user-stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Users</h3>
+                        <p><?= $totalUsers; ?></p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Admins</h3>
+                        <p><?= $roleCounts['Admin']; ?></p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Managers</h3>
+                        <p><?= $roleCounts['Manager']; ?></p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Cashiers</h3>
+                        <p><?= $roleCounts['Cashier']; ?></p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Accountants</h3>
+                        <p><?= $roleCounts['Accountant']; ?></p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Store Keepers</h3>
+                        <p><?= $roleCounts['StoreKeeper']; ?></p>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <h3>Admins</h3>
-                    <p><?= $roleCounts['Admin']; ?></p>
-                </div>
-                <div class="stat-card">
-                    <h3>Managers</h3>
-                    <p><?= $roleCounts['Manager']; ?></p>
-                </div>
-                <div class="stat-card">
-                    <h3>Cashiers</h3>
-                    <p><?= $roleCounts['Cashier']; ?></p>
-                </div>
-                <div class="stat-card">
-                    <h3>Accountants</h3>
-                    <p><?= $roleCounts['Accountant']; ?></p>
-                </div>
-                <div class="stat-card">
-                    <h3>Store Keepers</h3>
-                    <p><?= $roleCounts['StoreKeeper']; ?></p>
+
+                <!-- Audit & Compliance Stats Column (Right) -->
+                <div class="audit-stats-column">
+                    <div class="role-chart">
+                        <h2>User Role Distribution</h2>
+                        <canvas id="roleChart" width="250" height="250"></canvas>
+                    </div>
+
                 </div>
             </div>
+            <div class="audit-compliance-grid">
+                <div class="audit-section">
+                    <h3 class="section-title"><i class="fas fa-shield-check"></i> Compliance Audits</h3>
+                    <div class="audit-stat-card">
+                        <div class="audit-stat-item">
+                            <span class="audit-label">Total Compliance</span>
+                            <span
+                                class="audit-value"><?= $auditStats['compliance_audits']['total_compliance_audits'] ?? 0 ?></span>
+                        </div>
+                        <div class="audit-stat-item passed">
+                            <span class="audit-label">Passed</span>
+                            <span
+                                class="audit-value"><?= $auditStats['compliance_audits']['passed_compliance'] ?? 0 ?></span>
+                        </div>
+                        <div class="audit-stat-item failed">
+                            <span class="audit-label">Failed</span>
+                            <span
+                                class="audit-value"><?= $auditStats['compliance_audits']['failed_compliance'] ?? 0 ?></span>
+                        </div>
+                        <div class="audit-stat-item pending">
+                            <span class="audit-label">Pending</span>
+                            <span
+                                class="audit-value"><?= $auditStats['compliance_audits']['pending_compliance'] ?? 0 ?></span>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="audit-section">
+                    <h3 class="section-title"><i class="fas fa-shield-alt"></i> Compliance Violations</h3>
+                    <div class="audit-stat-card">
+                        <div class="audit-stat-item">
+                            <span class="audit-label">Total Violations</span>
+                            <span
+                                class="audit-value"><?= $auditStats['compliance_violations']['total_violations'] ?? 0 ?></span>
+                        </div>
+                        <div class="audit-stat-item resolved">
+                            <span class="audit-label">Resolved</span>
+                            <span
+                                class="audit-value"><?= $auditStats['compliance_violations']['resolved_violations'] ?? 0 ?></span>
+                        </div>
+                        <div class="audit-stat-item pending">
+                            <span class="audit-label">Pending</span>
+                            <span
+                                class="audit-value"><?= $auditStats['compliance_violations']['pending_violations'] ?? 0 ?></span>
+                        </div>
+                        <div class="audit-stat-item high-severity">
+                            <span class="audit-label">High Severity</span>
+                            <span
+                                class="audit-value"><?= $auditStats['compliance_violations']['high_severity'] ?? 0 ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Quick Links -->
             <div class="quick-links">
                 <a href="users.php" class="ql-btn"><i class="fas fa-user-plus"></i> Add User</a>
@@ -176,9 +246,26 @@ $totalUsers = count($users);
                         </tbody>
                     </table>
                 </div>
-                <div class="role-chart">
-                    <h2>User Role Distribution</h2>
-                    <canvas id="roleChart" width="300" height="300"></canvas>
+                <div class="audit-section">
+                    <h3 class="section-title"><i class="fas fa-clipboard-check"></i> Audit Reports</h3>
+                    <div class="audit-stat-card">
+                        <div class="audit-stat-item">
+                            <span class="audit-label">Total Audits</span>
+                            <span class="audit-value"><?= $auditStats['audit_reports']['total_audits'] ?? 0 ?></span>
+                        </div>
+                        <div class="audit-stat-item passed">
+                            <span class="audit-label">Passed</span>
+                            <span class="audit-value"><?= $auditStats['audit_reports']['passed_audits'] ?? 0 ?></span>
+                        </div>
+                        <div class="audit-stat-item failed">
+                            <span class="audit-label">Failed</span>
+                            <span class="audit-value"><?= $auditStats['audit_reports']['failed_audits'] ?? 0 ?></span>
+                        </div>
+                        <div class="audit-stat-item pending">
+                            <span class="audit-label">Pending</span>
+                            <span class="audit-value"><?= $auditStats['audit_reports']['pending_audits'] ?? 0 ?></span>
+                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -52,7 +52,7 @@
 }
 
 .activity-table th {
-    background: #f4f6f9;
+    background: #b6bfcc;
     color: #333;
 }
 
@@ -60,11 +60,15 @@
     border-bottom: none;
 }
 
+.activity-table tbody tr:hover {
+    background: #f5faff;
+}
+
 .role-chart {
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
-    padding: 20px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -223,11 +227,27 @@ h1 {
     margin: 0 2px;
     text-transform: capitalize;
 }
-.role-admin { background: #d9534f; }
-.role-manager { background: #0275d8; }
-.role-cashier { background: #5cb85c; }
-.role-accountant { background: #f0ad4e; }
-.role-storekeeper { background: #5bc0de; }
+
+.role-admin {
+    background: #d9534f;
+}
+
+.role-manager {
+    background: #0275d8;
+}
+
+.role-cashier {
+    background: #5cb85c;
+}
+
+.role-accountant {
+    background: #f0ad4e;
+}
+
+.role-storekeeper {
+    background: #5bc0de;
+}
+
 /* Add more role colors as needed */
 
 /* === Responsive Styles === */
@@ -302,6 +322,186 @@ h1 {
     }
 
     .calendar-header {
+        font-size: 16px;
+    }
+}
+
+.audit-compliance-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 32px;
+    width: 100%;
+}
+
+/* Dashboard Stats Container */
+.dashboard-stats-container {
+    display: flex;
+    gap: 32px;
+    margin: 20px 0 32px 0;
+    align-items: flex-start;
+}
+
+/* User Stats Grid (Left) */
+.user-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 20px;
+    flex: 2;
+}
+
+/* Audit Stats Column (Right) */
+.audit-stats-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+    min-width: 320px;
+}
+
+.audit-section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-left: 4px solid #1BB02C;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1BB02C;
+    margin: 0 0 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.audit-stat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.audit-stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 3px solid #dee2e6;
+    transition: all 0.2s ease;
+}
+
+.audit-stat-item:hover {
+    background: #e9ecef;
+    transform: translateX(2px);
+}
+
+.audit-stat-item.passed {
+    border-left-color: #43a047;
+    background: rgba(67, 160, 71, 0.1);
+}
+
+.audit-stat-item.failed {
+    border-left-color: #dc3545;
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.audit-stat-item.pending {
+    border-left-color: #ffc107;
+    background: rgba(255, 193, 7, 0.1);
+}
+
+.audit-stat-item.resolved {
+    border-left-color: #43a047;
+    background: rgba(67, 160, 71, 0.1);
+}
+
+.audit-stat-item.high-severity {
+    border-left-color: #dc3545;
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.audit-label {
+    font-size: 14px;
+    color: #555;
+    font-weight: 500;
+}
+
+.audit-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1BB02C;
+}
+
+.audit-stat-item.passed .audit-value {
+    color: #43a047;
+}
+
+.audit-stat-item.failed .audit-value {
+    color: #dc3545;
+}
+
+.audit-stat-item.pending .audit-value {
+    color: #ffc107;
+}
+
+.audit-stat-item.resolved .audit-value {
+    color: #43a047;
+}
+
+.audit-stat-item.high-severity .audit-value {
+    color: #dc3545;
+}
+
+/* Responsive Design for Dashboard Stats */
+@media (max-width: 1200px) {
+    .dashboard-stats-container {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .user-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, auto);
+    }
+
+    .audit-stats-column {
+        min-width: auto;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-stats-container {
+        margin: 16px 0 24px 0;
+    }
+
+    .user-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .audit-stats-column {
+        gap: 16px;
+    }
+
+    .audit-section {
+        padding: 16px;
+    }
+
+    .section-title {
+        font-size: 14px;
+    }
+
+    .audit-label {
+        font-size: 13px;
+    }
+
+    .audit-value {
         font-size: 16px;
     }
 }
