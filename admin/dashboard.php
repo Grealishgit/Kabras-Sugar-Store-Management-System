@@ -111,65 +111,13 @@ $auditStats = $auditHandler->getAuditStatistics();
 
                 </div>
             </div>
-            <div class="audit-compliance-grid">
-                <div class="audit-section">
-                    <h3 class="section-title"><i class="fas fa-shield-check"></i> Compliance Audits</h3>
-                    <div class="audit-stat-card">
-                        <div class="audit-stat-item">
-                            <span class="audit-label">Total Compliance</span>
-                            <span
-                                class="audit-value"><?= $auditStats['compliance_audits']['total_compliance_audits'] ?? 0 ?></span>
-                        </div>
-                        <div class="audit-stat-item passed">
-                            <span class="audit-label">Passed</span>
-                            <span
-                                class="audit-value"><?= $auditStats['compliance_audits']['passed_compliance'] ?? 0 ?></span>
-                        </div>
-                        <div class="audit-stat-item failed">
-                            <span class="audit-label">Failed</span>
-                            <span
-                                class="audit-value"><?= $auditStats['compliance_audits']['failed_compliance'] ?? 0 ?></span>
-                        </div>
-                        <div class="audit-stat-item pending">
-                            <span class="audit-label">Pending</span>
-                            <span
-                                class="audit-value"><?= $auditStats['compliance_audits']['pending_compliance'] ?? 0 ?></span>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="audit-section">
-                    <h3 class="section-title"><i class="fas fa-shield-alt"></i> Compliance Violations</h3>
-                    <div class="audit-stat-card">
-                        <div class="audit-stat-item">
-                            <span class="audit-label">Total Violations</span>
-                            <span
-                                class="audit-value"><?= $auditStats['compliance_violations']['total_violations'] ?? 0 ?></span>
-                        </div>
-                        <div class="audit-stat-item resolved">
-                            <span class="audit-label">Resolved</span>
-                            <span
-                                class="audit-value"><?= $auditStats['compliance_violations']['resolved_violations'] ?? 0 ?></span>
-                        </div>
-                        <div class="audit-stat-item pending">
-                            <span class="audit-label">Pending</span>
-                            <span
-                                class="audit-value"><?= $auditStats['compliance_violations']['pending_violations'] ?? 0 ?></span>
-                        </div>
-                        <div class="audit-stat-item high-severity">
-                            <span class="audit-label">High Severity</span>
-                            <span
-                                class="audit-value"><?= $auditStats['compliance_violations']['high_severity'] ?? 0 ?></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- Quick Links -->
             <div class="quick-links">
                 <a href="users.php" class="ql-btn"><i class="fas fa-user-plus"></i> Add User</a>
                 <a href="backup.php" class="ql-btn"><i class="fas fa-database"></i> Backup DB</a>
-                <a href="../modules/products/list.php" class="ql-btn"><i class="fas fa-box"></i> Manage Products</a>
-                <a href="#" class="ql-btn"><i class="fas fa-chart-line"></i> View Reports</a>
+                <a href="compliance.php" class="ql-btn"><i class="fas fa-box"></i> Manage Compliances</a>
+                <a href="audits.php" class="ql-btn"><i class="fas fa-chart-line"></i> View Reports</a>
             </div>
 
             <!-- Activity + Role Chart -->
@@ -268,7 +216,59 @@ $auditStats = $auditHandler->getAuditStatistics();
                     </div>
                 </div>
             </div>
+            <div class="audit-compliance-grid">
+                <div class="audit-section">
+                    <h3 class="section-title"><i class="fas fa-shield-check"></i> Compliance Audits</h3>
+                    <div class="audit-stat-card">
+                        <div class="audit-stat-item">
+                            <span class="audit-label">Total Compliance</span>
+                            <span
+                                class="audit-value"><?= $auditStats['compliance_audits']['total_compliance_audits'] ?? 0 ?></span>
+                        </div>
+                        <div class="audit-stat-item passed">
+                            <span class="audit-label">Passed</span>
+                            <span
+                                class="audit-value"><?= $auditStats['compliance_audits']['passed_compliance'] ?? 0 ?></span>
+                        </div>
+                        <div class="audit-stat-item failed">
+                            <span class="audit-label">Failed</span>
+                            <span
+                                class="audit-value"><?= $auditStats['compliance_audits']['failed_compliance'] ?? 0 ?></span>
+                        </div>
+                        <div class="audit-stat-item pending">
+                            <span class="audit-label">Pending</span>
+                            <span
+                                class="audit-value"><?= $auditStats['compliance_audits']['pending_compliance'] ?? 0 ?></span>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="audit-section">
+                    <h3 class="section-title"><i class="fas fa-shield-alt"></i> Compliance Violations</h3>
+                    <div class="audit-stat-card">
+                        <div class="audit-stat-item">
+                            <span class="audit-label">Total Violations</span>
+                            <span
+                                class="audit-value"><?= $auditStats['compliance_violations']['total_violations'] ?? 0 ?></span>
+                        </div>
+                        <div class="audit-stat-item resolved">
+                            <span class="audit-label">Resolved</span>
+                            <span
+                                class="audit-value"><?= $auditStats['compliance_violations']['resolved_violations'] ?? 0 ?></span>
+                        </div>
+                        <div class="audit-stat-item pending">
+                            <span class="audit-label">Pending</span>
+                            <span
+                                class="audit-value"><?= $auditStats['compliance_violations']['pending_violations'] ?? 0 ?></span>
+                        </div>
+                        <div class="audit-stat-item high-severity">
+                            <span class="audit-label">High Severity</span>
+                            <span
+                                class="audit-value"><?= $auditStats['compliance_violations']['high_severity'] ?? 0 ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Pending + Backup -->
             <div class="pending-backup-grid">
                 <div class="pending-requests">
