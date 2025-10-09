@@ -67,10 +67,10 @@ if ($authHandler->isLoggedIn()) {
                     </div>
 
                     <?php if (isset($_GET['error'])): ?>
-                    <div class="alert error"><?php echo htmlspecialchars($_GET['error']); ?></div>
+                        <div class="alert error"><?php echo htmlspecialchars($_GET['error']); ?></div>
                     <?php endif; ?>
                     <?php if (isset($_GET['success'])): ?>
-                    <div class="alert success"><?php echo htmlspecialchars($_GET['success']); ?></div>
+                        <div class="alert success"><?php echo htmlspecialchars($_GET['success']); ?></div>
                     <?php endif; ?>
 
                     <form action="auth-handler.php" method="POST" id="loginForm">
@@ -87,7 +87,6 @@ if ($authHandler->isLoggedIn()) {
                             <input type="password" placeholder="Enter your password" id="password" name="password"
                                 class="form-input" required>
                         </div>
-                        <!-- Role select removed -->
 
                         <div class="button-group">
                             <button type="submit" class="btn-primary">Login to Continue</button>
@@ -95,15 +94,10 @@ if ($authHandler->isLoggedIn()) {
                     </form>
                 </div>
 
-                <!-- Register section removed -->
             </div>
         </div>
-
-
-
     </div>
 
-    <!-- Register JS removed -->
 </body>
 
 </html>

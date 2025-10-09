@@ -152,6 +152,3 @@ CREATE TABLE compliance_violations (
     FOREIGN KEY (resolved_by) REFERENCES users(id)
 );
 
-
-
--- Products
