@@ -39,14 +39,83 @@ A comprehensive web-based management system for sugar stores, built with PHP and
 - **Architecture**: MVC pattern with modular handlers
 - **Security**: PDO prepared statements, session management
 
-## 📋 Prerequisites
+## � Docker Deployment
+
+### Quick Start with Docker Compose
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/Grealishgit/Kabras-Sugar-Store-Management-System.git
+cd Kabras-Sugar-Store-Management-System
+```
+
+2. **Start the application**
+```bash
+docker-compose up -d
+```
+
+3. **Access the application**
+- **Main Application**: http://localhost:8080
+- **phpMyAdmin**: http://localhost:8081
+
+### Docker Services
+
+- **app**: PHP 8.1 with Apache web server
+- **db**: MySQL 8.0 database
+- **phpmyadmin**: Database management interface
+
+### Environment Configuration
+
+Copy the example environment file:
+```bash
+cp .env.example .env
+```
+
+Edit `.env` to configure your settings:
+```env
+DB_HOST=db
+DB_DATABASE=kabras_store
+DB_USERNAME=root
+DB_PASSWORD=Hunter42.
+```
+
+### Docker Commands
+
+```bash
+# Start services
+docker-compose up -d
+
+# Stop services
+docker-compose down
+
+# View logs
+docker-compose logs -f app
+
+# Rebuild and restart
+docker-compose up -d --build
+
+# Access database
+docker-compose exec db mysql -u root -p kabras_store
+```
+
+### Production Deployment
+
+For production deployment:
+
+1. **Update environment variables** in `docker-compose.yml`
+2. **Use external database** for data persistence
+3. **Configure SSL/TLS** certificates
+4. **Set up reverse proxy** (nginx) for load balancing
+5. **Enable logging** and monitoring
+
+## �📋 Prerequisites (Manual Installation)
 
 - PHP 7.4 or higher
 - MySQL 5.7 or higher
 - Apache/Nginx web server
 - Composer (optional, for dependency management)
 
-## 🚀 Installation
+## 🚀 Manual Installation
 
 ### 1. Clone the Repository
 ```bash

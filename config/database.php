@@ -1,15 +1,24 @@
 <?php
-// Database configuration for Sheywe Hospital
+// Database configuration for Kabras Sugar Store Management System
 
 class Database
 {
-    private $host = 'localhost';
-    private $db   = 'kabras_store';
-    private $user = 'root';
-    private $pass = 'Hunter42.';
+    private $host;
+    private $db;
+    private $user;
+    private $pass;
     private $charset = 'utf8mb4';
 
     public $pdo;
+
+    public function __construct()
+    {
+        // Use environment variables if available (for Docker), otherwise use defaults
+        $this->host = getenv('DB_HOST') ?: 'localhost';
+        $this->db = getenv('DB_DATABASE') ?: 'kabras_store';
+        $this->user = getenv('DB_USERNAME') ?: 'root';
+        $this->pass = getenv('DB_PASSWORD') ?: 'Hunter42.';
+    }
 
     public function connect()
     {
@@ -21,6 +30,7 @@ class Database
             $this->pdo = new PDO($dsn, $this->user, $this->pass, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false,
             ]);
             return $this->pdo;
         } catch (PDOException $e) {
