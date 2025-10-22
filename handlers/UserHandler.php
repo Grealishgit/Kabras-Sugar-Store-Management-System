@@ -55,12 +55,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     switch ($action) {
         case 'add':
+            $password = $_POST['password'] ?? '';
+            if (empty($password)) {
+                $password = 'password123'; // Default password if not provided
+            }
             $data = [
                 'name' => $_POST['name'] ?? '',
                 'email' => $_POST['email'] ?? '',
                 'phone' => $_POST['phone'] ?? '',
                 'national_id' => $_POST['national_id'] ?? '',
-                'password' => $_POST['password'] ?? '',
+                'password' => $password,
                 'role' => $_POST['role'] ?? ''
             ];
             $result = $userHandler->addUser($data);

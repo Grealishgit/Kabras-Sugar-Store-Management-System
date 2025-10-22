@@ -144,7 +144,7 @@ $users = $authHandler->getAllUsers();
                 </thead>
                 <tbody>
                     <?php foreach ($users as $user): ?>
-                        <tr class="user-row" data-role="<?php echo htmlspecialchars($user['role']); ?>">
+                        <tr class="user-row" data-role="<?php echo htmlspecialchars($user['role']); ?>" data-user-id="<?php echo $user['id']; ?>">
                             <td>
                                 <div class="user-info">
 

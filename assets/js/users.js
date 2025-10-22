@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    document.querySelector(`.user-checkbox[value="${editingUserId}"]`).closest('tr').remove();
+                    document.querySelector(`tr[data-user-id="${editingUserId}"]`).remove();
                     alert('User deleted');
                 } else {
                     alert('Delete failed');
