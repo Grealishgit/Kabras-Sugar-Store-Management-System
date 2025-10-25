@@ -1,4 +1,16 @@
 <?php
+
+require_once '../handlers/AuthHandler.php';
+
+$authHandler = new AuthHandler();
+
+// Ensure user is logged in
+if (!$authHandler->isLoggedIn()) {
+    header('Location: ../login.php?error=Please log in first.');
+    exit();
+}
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['download_csv'])) {
     // Suppress deprecated warnings and output only CSV
     error_reporting(E_ERROR | E_PARSE);
@@ -31,15 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout']) && $_POST['
     exit();
 }
 
-require_once '../handlers/AuthHandler.php';
 
-$authHandler = new AuthHandler();
-
-// Ensure user is logged in
-if (!$authHandler->isLoggedIn()) {
-    header('Location: ../login.php?error=Please log in first.');
-    exit();
-}
 
 $currentUser = $authHandler->getCurrentUser();
 
