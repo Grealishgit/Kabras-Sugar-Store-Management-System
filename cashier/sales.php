@@ -4,11 +4,13 @@ require_once '../handlers/AuthHandler.php';
 require_once '../handlers/SalesHandler.php';
 require_once '../handlers/CustomerHandler.php';
 require_once '../handlers/PaymentsHandler.php';
+require_once '../handlers/ProductHandler.php';
 
 $authHandler = new AuthHandler();
 $salesHandler = new SalesHandler();
 $customerHandler = new CustomerHandler();
 $paymentsHandler = new PaymentsHandler();
+$productHandler = new ProductHandler();
 
 // Ensure user is logged in
 if (!$authHandler->isLoggedIn()) {
@@ -31,6 +33,10 @@ $todaySales = $salesHandler->getTodaySales($currentUser['id']);
 $weeklySales = $salesHandler->getWeeklySales($currentUser['id']);
 $monthlySales = $salesHandler->getMonthlySales($currentUser['id']);
 $recentSales = $salesHandler->getRecentSales($currentUser['id'], 10);
+
+// Get products and customers
+$products = $productHandler->getAllProducts();
+$customers = $customerHandler->getAllCustomers();
 
 // Handle sale submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['process_sale'])) {
@@ -106,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['process_sale'])) {
             </div>
         <?php endif; ?>
 
-      
+
 
         <!-- Sales Statistics Dashboard -->
         <div class="stats-dashboard">
