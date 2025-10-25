@@ -1,4 +1,15 @@
 <?php
+
+require_once '../handlers/AuthHandler.php';
+
+$authHandler = new AuthHandler();
+
+// Ensure user is logged in
+if (!$authHandler->isLoggedIn()) {
+    header('Location: ../login.php?error=Please log in first.');
+    exit();
+}
+
 // sidebar.php
 
 // Assume session and access control are handled in the main file

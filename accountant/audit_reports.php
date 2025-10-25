@@ -161,7 +161,7 @@ $auditReports = $auditHandler->getAllAuditReports();
                 <?php foreach ($auditReports as $ar): ?>
                     <tr>
                         <td><?= htmlspecialchars($ar['id']) ?></td>
-                        <td><?= htmlspecialchars($ar['audit_date']) ?></td>
+                        <td><?= date('M d, Y', strtotime(htmlspecialchars($ar['audit_date']))) ?></td>
                         <td><?= htmlspecialchars($ar['audit_type']) ?></td>
                         <td><?= htmlspecialchars($ar['conducted_by_name'] ?? $ar['conducted_by']) ?></td>
                         <td class="status-cell <?php
@@ -170,7 +170,7 @@ $auditReports = $auditHandler->getAllAuditReports();
                                                 ?>"><?= htmlspecialchars($ar['status']) ?></td>
                         <td><?= nl2br(htmlspecialchars($ar['comments'] ?? '')) ?></td>
                         <td><?= nl2br(htmlspecialchars($ar['follow_up_actions'] ?? '')) ?></td>
-                        <td><?= htmlspecialchars($ar['completion_date'] ?? '') ?></td>
+                        <td><?= date('M d, Y', strtotime(htmlspecialchars($ar['completion_date'] ?? ''))) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
